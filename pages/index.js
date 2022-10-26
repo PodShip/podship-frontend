@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client";
 
 export default function Home() {
     const { isWeb3Enabled, chainId } = useMoralis();
-    const chainString = chainId ? parseInt(chainId).toString() : 1337;
+    const chainString = chainId ? parseInt(chainId).toString() : 31337;
     console.log({ chainId, chainString });
     const markeplaceAddress = networkMapping[chainString].NftMarketPlace;
     const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEM);
