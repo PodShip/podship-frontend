@@ -1,4 +1,4 @@
-import { ConnectWallet } from "@web3uikit/web3";
+import { ConnectButton } from "@web3uikit/web3";
 import Link from "next/link";
 export default function Header() {
     return (
@@ -12,7 +12,7 @@ export default function Header() {
                     <Link href="/sell-nft">
                         <a className="mr-4 p-6">Nft sell nft</a>
                     </Link>
-                    <ConnectWallet moralisAuth={false} />
+                    <ConnectButton moralisAuth={false} />
                 </div>
             </nav>
         </>
