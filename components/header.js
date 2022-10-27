@@ -4,13 +4,24 @@ export default function Header() {
     return (
         <>
             <nav className="p-5 flex flex-row justify-between items-center ">
-                <h1 className="py-4 px-4 font-bold text-3xl">NFT MarketPlace</h1>
+                <Link href="/">
+                    <a className="w-auto h-auto">
+                        <img src="logo.svg"></img>
+                    </a>
+                </Link>
                 <div className="flex flex-row items-center">
                     <Link href="/">
-                        <a className="mr-4 p-6">Home</a>
+                        <a className="ml-6 p-4 primary-btn items-center">
+                            <p className="ml-3">+ Create</p>
+                        </a>
                     </Link>
-                    <Link href="/sell-nft">
-                        <a className="mr-4 p-6">Nft sell nft</a>
+                    <Link href="/explore">
+                        <a className="ml-4 p-3 secondary-btn ">
+                            <div className="flex flex-row items-center">
+                                <img src="search.svg" />
+                                <p className="ml-2">Explore</p>
+                            </div>
+                        </a>
                     </Link>
                     <ConnectButton moralisAuth={false} />
                 </div>
