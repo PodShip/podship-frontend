@@ -44,7 +44,7 @@ export default function SecondPart() {
                     <h2 className="secondPart-Secondary pl-16">Join us in the new journey.</h2>
                 </div>
                 <div>
-                    <a className="secondPart-primary-btn ml-6 p-4 items-center ">
+                    <a className="secondPart-primary-btn ml-6 p-4 items-center" href="/explore">
                         <p style={{ fontFamily: "Roc Grotesk" }}>Go Check it Out</p>
                     </a>
                 </div>

@@ -133,3 +133,59 @@ body {
     background: #ffffff;
     color: #000000;
 }
+
+.thirdPart-Primary {
+    /* Our Perks */
+
+    position: relative;
+    /* left: 7.15%;
+    right: 67.57%;
+    top: 35.74%;
+    bottom: 55.96%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 85px;
+
+    color: #ffffff;
+}
+
+.thirdPart-Secondary {
+    /* Perks for Podcasters */
+
+    position: relative;
+    /* left: 10.17%;
+    right: 62.81%;
+    top: 50.2%;
+    bottom: 45.61%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 35px;
+    line-height: 43px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.thirdPart-Thirdly {
+    /* Perks for Podcast Lovers */
+
+    position: relative;
+    /* left: 10.21%;
+    right: 59.31%;
+    top: 59.18%;
+    bottom: 36.62%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 43px;
+    /* identical to box height */
+
+    color: #ffffff;
+}

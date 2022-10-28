@@ -6,6 +6,7 @@ import { useQuery } from "@apollo/client";
 import Header from "../components/header";
 import FirstPart from "../components/firstPart-landingPage";
 import SecondPart from "../components/secondPart-landingPage";
+import ThirdPart from "../components/thirdPart-landingPage";
 
 export default function Home() {
     // const { isWeb3Enabled, chainId } = useMoralis();
@@ -19,6 +20,7 @@ export default function Home() {
             <Header />
             <FirstPart />
             <SecondPart />
+            <ThirdPart />
         </>
     );
 }
