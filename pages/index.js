@@ -7,6 +7,7 @@ import Header from "../components/header";
 import FirstPart from "../components/firstPart-landingPage";
 import SecondPart from "../components/secondPart-landingPage";
 import ThirdPart from "../components/thirdPart-landingPage";
+import FourthPart from "../components/fourthPart-landingPage";
 
 export default function Home() {
     // const { isWeb3Enabled, chainId } = useMoralis();
@@ -21,6 +22,7 @@ export default function Home() {
             <FirstPart />
             <SecondPart />
             <ThirdPart />
+            <FourthPart />
         </>
     );
 }

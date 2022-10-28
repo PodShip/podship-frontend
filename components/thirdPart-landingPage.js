@@ -9,7 +9,7 @@ export default function ThirdPart() {
                 </div>
                 <div></div>
                 <div>
-                    <img className="pl-50 h-auto w-auto" src="gold.svg" />
+                    <img className="pl-50 h-auto w-auto" src="thirdPartImage.svg" />
                 </div>
             </div>
         </div>

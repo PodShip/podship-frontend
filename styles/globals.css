@@ -189,3 +189,37 @@ body {
 
     color: #ffffff;
 }
+
+.fourthPart-Primary {
+    /* Never miss a podcast */
+
+    /* position: absolute; */
+    /* left: 23.06%;
+    right: 23.12%;
+    top: 27.34%;
+    bottom: 52.15%; */
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 105px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.fourthPart-input {
+    /* Rectangle 9 */
+
+    box-sizing: border-box;
+
+    /* position: absolute;
+    left: 27.92%;
+    right: 42.36%;
+    top: 82.74%;
+    bottom: 15.94%; */
+
+    border: 1.5px solid #ffffff;
+    border-radius: 22px;
+}
