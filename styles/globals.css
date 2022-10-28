@@ -5,3 +5,90 @@ body {
     background: #000000;
     color: #ffffff;
 }
+
+.landingPage-main {
+    /* THE NEW PODCAST 3.0 */
+
+    position: absolute;
+    left: 3.71%;
+    right: 49.22%;
+    top: 25.55%;
+    bottom: 57.73%;
+
+    /* font-family: "Montserrat"; */
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 85px;
+
+    color: #ffffff;
+}
+
+.landingPage-sub {
+    /* Join us in the new journey where we decentralize the podcast industry */
+
+    position: absolute;
+    left: 3.71%;
+    right: 49.08%;
+    top: 44.23%;
+    bottom: 47.31%;
+    padding-top: 1em;
+
+    /* font-family: "Montserrat"; */
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 43px;
+
+    color: #ffffff;
+}
+
+.primary-btn {
+    /* Rectangle 9 */
+
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 119.85px;
+    height: 57.41px;
+    left: 681.89px;
+    top: 36px;
+
+    background: #ffffff;
+    border-radius: 22px;
+    color: #000000;
+}
+
+.secondary-btn {
+    /* Rectangle 9 */
+
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    width: 122.87px;
+    height: 57.41px;
+    left: 833.97px;
+    top: 36px;
+
+    border: 1.5px solid #ffffff;
+    border-radius: 22px;
+}
+
+.bHfmdT {
+    box-sizing: border-box;
+
+    /* position: absolute; */
+    /* width: 122.87px !important; */
+    height: 57.41px !important;
+    left: 833.97px !important;
+    top: 36px !important;
+
+    border: 1.5px solid #ffffff !important;
+    border-radius: 22px !important;
+    background: none !important;
+    font-size: auto !important;
+}
+
+.hRZEpT {
+    color: #ffffff !important;
+}
