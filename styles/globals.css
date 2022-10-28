@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
     background: #000000;
     color: #ffffff;
@@ -91,4 +92,140 @@ body {
 
 .hRZEpT {
     color: #ffffff !important;
+}
+
+.secondPart-Primary {
+    /* Dont Miss Out! */
+
+    font-family: "Roc Grotesk";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 101px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.secondPart-Secondary {
+    /* Join us in the new journey. */
+
+    position: relative;
+    /* left: 12.22%;
+    right: 40.9%; */
+    /* top: 21.97%; */
+    bottom: 74.02%;
+
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 41px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.secondPart-primary-btn {
+    /* Rectangle 324 */
+
+    position: absolute;
+    background: #ffffff;
+    color: #000000;
+}
+
+.thirdPart-Primary {
+    /* Our Perks */
+
+    position: relative;
+    /* left: 7.15%;
+    right: 67.57%;
+    top: 35.74%;
+    bottom: 55.96%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 85px;
+
+    color: #ffffff;
+}
+
+.thirdPart-Secondary {
+    /* Perks for Podcasters */
+
+    position: relative;
+    /* left: 10.17%;
+    right: 62.81%;
+    top: 50.2%;
+    bottom: 45.61%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 35px;
+    line-height: 43px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.thirdPart-Thirdly {
+    /* Perks for Podcast Lovers */
+
+    position: relative;
+    /* left: 10.21%;
+    right: 59.31%;
+    top: 59.18%;
+    bottom: 36.62%; */
+
+    font-family: "Montserrat";
+    font-style: normal;
+    font-weight: 300;
+    font-size: 30px;
+    line-height: 43px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.fourthPart-Primary {
+    /* Never miss a podcast */
+
+    /* position: absolute; */
+    /* left: 23.06%;
+    right: 23.12%;
+    top: 27.34%;
+    bottom: 52.15%; */
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 105px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.fourthPart-input {
+    /* Rectangle 9 */
+
+    box-sizing: border-box;
+
+    /* position: absolute;
+    left: 27.92%;
+    right: 42.36%;
+    top: 82.74%;
+    bottom: 15.94%; */
+
+    border: 1.5px solid #ffffff;
+    border-radius: 22px;
+}
+
+.footer-hr {
+    /* Vector 861 */
+
+    border: 0.5px solid #ffffff;
 }

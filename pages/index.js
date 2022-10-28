@@ -4,6 +4,11 @@ import GET_ACTIVE_ITEM from "../constants/subgraphQueries";
 const networkMapping = require("../constants/networkMapping.json");
 import { useQuery } from "@apollo/client";
 import Header from "../components/header";
+import FirstPart from "../components/firstPart-landingPage";
+import SecondPart from "../components/secondPart-landingPage";
+import ThirdPart from "../components/thirdPart-landingPage";
+import FourthPart from "../components/fourthPart-landingPage";
+import Footer from "../components/footer";
 
 export default function Home() {
     // const { isWeb3Enabled, chainId } = useMoralis();
@@ -13,15 +18,13 @@ export default function Home() {
     // const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEM);
 
     return (
-        <div className="bg-right-top" style={{ backgroundImage: "url(background.svg)" }}>
+        <>
             <Header />
-            <div className="h-screen w-screen">
-                <h1 className="landingPage-main">THE NEW PODCAST 3.0</h1>
-                <br />
-                <h5 className="landingPage-sub">
-                    Join us in the new journey where we decentralize the podcast industry
-                </h5>
-            </div>
-        </div>
+            <FirstPart />
+            <SecondPart />
+            <ThirdPart />
+            <FourthPart />
+            <Footer />
+        </>
     );
 }
