@@ -25,8 +25,7 @@ export default function Explore() {
         {
             podcastName: "7Seven Minutes",
             creator: "Logan Paul",
-            image:
-                "https://media.vanityfair.com/photos/5a4bda912d48cc419d39410d/2:3/w_686,h_1029,c_limit/Logan-Paul-Worrisome.jpg",
+            image: "https://media.vanityfair.com/photos/5a4bda912d48cc419d39410d/2:3/w_686,h_1029,c_limit/Logan-Paul-Worrisome.jpg",
         },
         {
             podcastName: "2 The things we do",
@@ -47,8 +46,7 @@ export default function Explore() {
         {
             podcastName: "9Seven Minutes",
             creator: "Logan Paul",
-            image:
-                "https://media.vanityfair.com/photos/5a4bda912d48cc419d39410d/2:3/w_686,h_1029,c_limit/Logan-Paul-Worrisome.jpg",
+            image: "https://media.vanityfair.com/photos/5a4bda912d48cc419d39410d/2:3/w_686,h_1029,c_limit/Logan-Paul-Worrisome.jpg",
         },
     ];
 

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 body {
     background: #000000;
     color: #ffffff;
@@ -91,4 +92,44 @@ body {
 
 .hRZEpT {
     color: #ffffff !important;
+}
+
+.secondPart-Primary {
+    /* Dont Miss Out! */
+
+    font-family: "Roc Grotesk";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 101px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.secondPart-Secondary {
+    /* Join us in the new journey. */
+
+    position: relative;
+    /* left: 12.22%;
+    right: 40.9%; */
+    /* top: 21.97%; */
+    bottom: 74.02%;
+
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 35px;
+    line-height: 41px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.secondPart-primary-btn {
+    /* Rectangle 324 */
+
+    position: absolute;
+    background: #ffffff;
+    color: #000000;
 }
