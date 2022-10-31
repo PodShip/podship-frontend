@@ -1,8 +1,17 @@
+import Router from "next/router";
 import { Typography, Card, CardMedia, CardContent } from "@mui/material";
+
 function PodcastCard({ podcast }) {
+    const foward = (podcast) => {
+        Router.push({
+            pathname: "/singlePodcast",
+            query: { podcast: "pass CID" },
+        });
+    };
+
     return (
         <div>
-            <Card onClick={() => details(podcast)} style={{ background: "#000000" }}>
+            <Card onClick={() => foward(podcast)} style={{ background: "#000000" }}>
                 <CardMedia
                     component="img"
                     image={podcast.image}
