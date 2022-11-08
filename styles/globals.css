@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    background: #000000;
+    background: #101010;
     color: #ffffff;
 }
 
@@ -228,4 +228,85 @@ body {
     /* Vector 861 */
 
     border: 0.5px solid #ffffff;
+}
+
+/* page create */
+
+.leftPanel {
+    /* Rectangle 342 */
+
+    position: absolute;
+    width: 349px;
+    height: 392px;
+    left: 50px;
+    top: 170px;
+
+    background: #000000;
+    border-radius: 22px;
+}
+
+.rightPanel {
+    /* Rectangle 330 */
+
+    box-sizing: border-box;
+
+    position: absolute;
+    width: 938px;
+    height: 939px;
+    left: 452px;
+    top: 154px;
+
+    background: #000000;
+    border-radius: 22px;
+}
+.primaryTxt {
+    /* Upload Form */
+
+    position: relative;
+
+    font-style: normal;
+    font-weight: 600;
+    font-size: 35px;
+    line-height: 43px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.inputTxt {
+    /* Rectangle 9 */
+
+    box-sizing: border-box;
+
+    background: #0d0d0d;
+    border-radius: 12px;
+}
+
+.MuiInputBase-input {
+    color: white;
+}
+
+.uploader {
+    /* Rectangle 331 */
+    max-width: 1500px !important;
+
+    box-sizing: border-box !important;
+    border: #000000 !important;
+    background: #0d0d0d !important;
+    border-radius: 22px !important;
+    place-items: center !important;
+    height: 200px !important;
+
+    display: flex !important;
+    cursor: pointer;
+}
+
+.submit-btn {
+    /* Rectangle 341 */
+
+    box-sizing: border-box;
+    height: 62px;
+    color: white;
+    background: #7144ff;
+    border-radius: 12px;
 }

@@ -12,6 +12,11 @@ export default function Header() {
                 <div className="flex flex-row items-center">
                     <Link href="/">
                         <a className="ml-6 p-4 primary-btn items-center">
+                            <p className="ml-6">Home</p>
+                        </a>
+                    </Link>
+                    <Link href="/create">
+                        <a className="ml-6 p-4 secondary-btn items-center">
                             <p className="ml-3">+ Create</p>
                         </a>
                     </Link>
