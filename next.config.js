@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+    reactStrictMode: false,
     swcMinify: true,
     env: {
         NEXT_PUBLIC_APP_ID: process.env.NEXT_PUBLIC_APP_ID,
