@@ -3,6 +3,7 @@ import Footer from "../components/footer";
 import { useState } from "react";
 import { Button, FormControl, FormHelperText, Input, InputLabel, TextField } from "@mui/material";
 import { FileUploader } from "react-drag-drop-files";
+import upload from "../components/upload";
 
 const fileTypes = ["mp4", "mp3"];
 
@@ -11,6 +12,11 @@ export default function Explore() {
     const [file, setFile] = useState(null);
     const handleChange = (file) => {
         setFile(file);
+        console.log({ file });
+    };
+
+    const onSubmit = () => {
+        upload(file, "test", "test test test ");
     };
     return (
         <>
@@ -109,7 +115,9 @@ export default function Explore() {
                         </FileUploader>
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <Button className="submit-btn">Create your podcast</Button>
+                        <Button className="submit-btn" onClick={onSubmit}>
+                            Create your podcast
+                        </Button>
                     </FormControl>
                 </div>
             </div>
