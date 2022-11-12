@@ -28,11 +28,15 @@ export default function SecondPart() {
                 columns={{ xs: 4, sm: 8, md: 12 }}
             >
                 {pods ? (
-                    pods.podcasts.map((podcast, index) => (
-                        <Grid item md={3} key={index}>
-                            <PodcastCard podcast={podcast} />
-                        </Grid>
-                    ))
+                    pods.podcasts.map((podcast, index) =>
+                        podcast.metadataURI ? (
+                            <Grid item md={3} key={index}>
+                                <PodcastCard podcast={podcast} />
+                            </Grid>
+                        ) : (
+                            ""
+                        )
+                    )
                 ) : (
                     <h2>loading...</h2>
                 )}

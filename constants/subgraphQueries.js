@@ -10,7 +10,12 @@ const GET_ACTIVE_ITEM = gql`
             amount
             isOnSale
         }
-        podcasts(first: 5) {
+        podcasts(
+            first: 4
+            orderBy: created
+            orderDirection: desc
+            where: { metadataURI_not: null }
+        ) {
             id
             metadataURI
             baseURI

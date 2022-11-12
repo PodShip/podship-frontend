@@ -25,17 +25,17 @@ function PodcastCard({ podcast }) {
     useEffect(() => {
         updateUI();
     }, []);
+    console.log({ podcast });
 
     async function updateUI() {
         const requestUrl = podcast.metadataURI?.replace("ipfs://", "https://ipfs.io/ipfs/");
         if (requestUrl) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
-            console.log({ tokenUriResponse });
             if (tokenUriResponse) {
                 setcreator(truncateString(podcast.ownerAddress.id, 15));
                 setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
                 setanimationUrl(
-                    tokenUriResponse.animation_url.replace("ipfs://", "https://ipfs.io/ipfs/")
+                    tokenUriResponse.animation_url?.replace("ipfs://", "https://ipfs.io/ipfs/")
                 );
                 setpodcastName(tokenUriResponse.name);
             }
