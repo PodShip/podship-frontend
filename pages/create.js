@@ -163,8 +163,7 @@ export default function Create() {
                             required
                             multiline
                             inputProps={{
-                                color: "white",
-                                style: { height: "125px" },
+                                style: { height: "125px", color: "white" },
                                 onChange: (val) => {
                                     console.log(val.target.value);
                                     setData({ ...data, desc: val.target.value });
