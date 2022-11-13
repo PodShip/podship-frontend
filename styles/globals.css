@@ -231,11 +231,9 @@ body {
 .leftPanel {
     /* Rectangle 342 */
 
-    position: absolute;
-    width: 349px;
-    height: 392px;
-    left: 50px;
-    top: 170px;
+    position: relative;
+    width: 400px;
+    height: 500px;
 
     background: #000000;
     border-radius: 22px;
@@ -246,11 +244,7 @@ body {
 
     box-sizing: border-box;
 
-    position: absolute;
-    width: 938px;
-    height: 939px;
-    left: 452px;
-    top: 154px;
+    position: relative;
 
     background: #000000;
     border-radius: 22px;

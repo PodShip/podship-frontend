@@ -61,8 +61,8 @@ export default function Create() {
     return (
         <>
             <Header />
-            <div>
-                <div className="leftPanel">
+            <div className="flex w-screen">
+                <div className="leftPanel m-16">
                     <h1 className="primaryTxt mt-10 ml-16">Upload Form</h1>
                     <p className="ml-16 mr-16 mt-5">
                         Things you need to complete in order to upload Podcast
@@ -94,9 +94,10 @@ export default function Create() {
                         </li>
                     </ul>
                 </div>
-                <div className="rightPanel">
+                <div className="rightPanel w-8/12">
+                    <br />
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <labela htmlFor="my-input">Podcast Name</labela>
+                        <label htmlFor="my-input">Podcast Name</label>
                         <Input
                             style={{ color: "white" }}
                             className="inputTxt p-3 mt-3"
@@ -140,7 +141,7 @@ export default function Create() {
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
-                            Upload podcast{" "}
+                            Upload podcast
                         </label>
                         <FileUploader
                             classes="uploader"
@@ -151,7 +152,7 @@ export default function Create() {
                             <div className="grid grid-flow-col auto-cols-3 items-center h-full w-full">
                                 <div></div>
                                 <div className="items-center">
-                                    <div className="ml-52">
+                                    <div className="ml-48 p-10">
                                         <img className="ml-1 mb-3" src="upload.svg"></img>
                                         {file ? (
                                             <p>{file.name}</p>
@@ -180,7 +181,7 @@ export default function Create() {
                             <div className="grid grid-flow-col auto-cols-3 items-center h-full w-full">
                                 <div></div>
                                 <div className="items-center">
-                                    <div className="ml-52">
+                                    <div className="ml-52 p-5">
                                         {fileCover ? (
                                             <p>{fileCover.name}</p>
                                         ) : (
@@ -199,6 +200,8 @@ export default function Create() {
                     </FormControl>
                 </div>
             </div>
+            <br />
+            <Footer />
         </>
     );
 }
