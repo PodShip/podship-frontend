@@ -1,7 +1,8 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
 import { useState } from "react";
-import { Button, FormControl, FormHelperText, Input, InputLabel, TextField } from "@mui/material";
+import { FormControl, Input, TextField } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { FileUploader } from "react-drag-drop-files";
 import upload from "../components/upload";
 import { useWeb3Contract } from "react-moralis";
@@ -17,6 +18,8 @@ export default function Create() {
     const [fileCover, setFileCover] = useState(null);
     const dispatch = useNotification();
     const { runContractFunction: mintNft } = useWeb3Contract();
+    const [loading, setloading] = useState(false);
+
     const handleChange = (file) => {
         setFile(file);
         console.log({ file });
@@ -28,7 +31,12 @@ export default function Create() {
     };
 
     const onSubmit = async () => {
-        console.log({ data });
+        setloading(true);
+        if (!file || !fileCover || !data.podcastName || !data.desc || !data.price) {
+            handleError();
+            setloading(false);
+            return;
+        }
         const token = await upload(file, fileCover, data.podcastName, data.desc);
         console.log({ token });
 
@@ -43,6 +51,7 @@ export default function Create() {
             },
             onError: (error) => {
                 console.log(error);
+                setloading(false);
             },
             onSuccess: () => handleSuccess(),
         });
@@ -51,10 +60,21 @@ export default function Create() {
     };
 
     const handleSuccess = async () => {
+        setloading(false);
         dispatch({
             type: "success",
-            message: "Successfully Adder your Podcast!",
+            message: "Successfully Added your Podcast!",
             title: "Item Added",
+            position: "topR",
+        });
+    };
+
+    const handleError = async () => {
+        setloading(false);
+        dispatch({
+            type: "error",
+            message: "Please fill all required fileds",
+            title: "Error !",
             position: "topR",
         });
     };
@@ -70,26 +90,52 @@ export default function Create() {
                     <ul className="ml-16 mt-5">
                         <li className="mb-2">
                             <div className="flex flex-row items-center">
-                                <img src="selected.svg"></img>
+                                {data.podcastName ? (
+                                    <img src="selected.svg"></img>
+                                ) : (
+                                    <img src="unselected.svg"></img>
+                                )}
                                 <p className="ml-5">Podcast Name</p>
                             </div>
                         </li>
                         <li className="mb-2">
                             <div className="flex flex-row items-center">
-                                <img src="unselected.svg"></img>
+                                {data.desc ? (
+                                    <img src="selected.svg"></img>
+                                ) : (
+                                    <img src="unselected.svg"></img>
+                                )}
                                 <p className="ml-5">Description</p>
                             </div>
                         </li>
                         <li className="mb-2">
                             <div className="flex flex-row items-center">
-                                <img src="unselected.svg"></img>
+                                {data.price ? (
+                                    <img src="selected.svg"></img>
+                                ) : (
+                                    <img src="unselected.svg"></img>
+                                )}
                                 <p className="ml-5">Price</p>
                             </div>
                         </li>
                         <li className="mb-2">
                             <div className="flex flex-row items-center">
-                                <img src="unselected.svg"></img>
+                                {file ? (
+                                    <img src="selected.svg"></img>
+                                ) : (
+                                    <img src="unselected.svg"></img>
+                                )}
                                 <p className="ml-5">Upload Podcast</p>
+                            </div>
+                        </li>
+                        <li className="mb-2">
+                            <div className="flex flex-row items-center">
+                                {fileCover ? (
+                                    <img src="selected.svg"></img>
+                                ) : (
+                                    <img src="unselected.svg"></img>
+                                )}
+                                <p className="ml-5">Upload Cover Photo</p>
                             </div>
                         </li>
                     </ul>
@@ -97,23 +143,25 @@ export default function Create() {
                 <div className="rightPanel w-8/12">
                     <br />
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <label htmlFor="my-input">Podcast Name</label>
+                        <label htmlFor="my-input">Podcast Name *</label>
                         <Input
                             style={{ color: "white" }}
                             className="inputTxt p-3 mt-3"
                             id="my-input"
                             placeholder="Cool podcast name"
+                            required
                             onChange={(val) => {
                                 setData({ ...data, podcastName: val.target.value });
                             }}
                         />
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <label htmlFor="my-input">Description</label>
+                        <label htmlFor="my-input">Description *</label>
                         <TextField
                             style={{ color: "white" }}
                             className="inputTxt p-3 mt-3"
                             placeholder="Write a short description for your podcast...."
+                            required
                             multiline
                             inputProps={{
                                 color: "white",
@@ -128,11 +176,13 @@ export default function Create() {
                         />
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <label htmlFor="my-input">Price (in ETH)</label>
+                        <label htmlFor="my-input">Price (in ETH) *</label>
                         <Input
+                            type="number"
                             style={{ color: "white" }}
                             className="inputTxt p-3 mt-3"
                             id="my-input"
+                            required
                             placeholder="0.01"
                             onChange={(val) => {
                                 setData({ ...data, price: val.target.value });
@@ -141,12 +191,13 @@ export default function Create() {
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
-                            Upload podcast
+                            Upload podcast *
                         </label>
                         <FileUploader
                             classes="uploader"
                             handleChange={handleChange}
                             name="file"
+                            required
                             types={fileTypes}
                         >
                             <div className="grid grid-flow-col auto-cols-3 items-center h-full w-full">
@@ -170,11 +221,12 @@ export default function Create() {
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
-                            Upload cover Photo
+                            Upload cover Photo *
                         </label>
                         <FileUploader
                             classes="uploader"
                             handleChange={handleChangeCover}
+                            required
                             name="fileCover"
                             types={fileTypesCover}
                         >
@@ -194,9 +246,9 @@ export default function Create() {
                         </FileUploader>
                     </FormControl>
                     <FormControl className="flex m-10" style={{ color: "white" }}>
-                        <Button className="submit-btn" onClick={onSubmit}>
+                        <LoadingButton className="submit-btn" onClick={onSubmit} loading={loading}>
                             Create your podcast
-                        </Button>
+                        </LoadingButton>
                     </FormControl>
                 </div>
             </div>
