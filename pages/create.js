@@ -63,8 +63,8 @@ export default function Create() {
         setloading(false);
         dispatch({
             type: "success",
-            message: "Successfully Added your Podcast!",
-            title: "Item Added",
+            message: "It might take a few minutes to mint your NFT, stay tuned !",
+            title: "Successfully Added your Podcast!",
             position: "topR",
         });
     };
