@@ -37,7 +37,8 @@ export default function Create() {
             setloading(false);
             return;
         }
-        const token = await upload(file, fileCover, data.podcastName, data.desc);
+        console.log({ data });
+        const token = await upload(file, fileCover, data);
         console.log({ token });
 
         const response = await mintNft({
