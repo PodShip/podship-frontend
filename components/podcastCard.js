@@ -1,5 +1,6 @@
 import Router from "next/router";
 import { Typography, Card, CardMedia, CardContent } from "@mui/material";
+import { useWeb3Contract, useMoralis } from "react-moralis";
 import { useState, useEffect } from "react";
 
 const truncateString = (fullStr, strLen) => {
@@ -14,25 +15,35 @@ function PodcastCard({ podcast }) {
     const [podcastName, setpodcastName] = useState("");
     const [creator, setcreator] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
+    const { isWeb3Enabled, account } = useMoralis();
 
     const foward = (podcast) => {
+        console.log({ podcast });
         Router.push({
             pathname: "/singlePodcast",
-            query: { podcast: "pass CID" },
+            query: {
+                podcast: podcast.metadataURI,
+                tokenId: podcast.id.toString(),
+                creator: podcast.ownerAddress.id,
+                created: podcast.created,
+            },
         });
     };
 
     useEffect(() => {
         updateUI();
     }, []);
-    console.log({ podcast });
 
     async function updateUI() {
         const requestUrl = podcast.metadataURI?.replace("ipfs://", "https://ipfs.io/ipfs/");
         if (requestUrl) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
             if (tokenUriResponse) {
-                setcreator(truncateString(podcast.ownerAddress.id, 15));
+                setcreator(
+                    podcast.ownerAddress.id === account
+                        ? "Owned by you"
+                        : "Owner: " + truncateString(podcast.ownerAddress.id, 15)
+                );
                 setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
                 setanimationUrl(
                     tokenUriResponse.animation_url?.replace("ipfs://", "https://ipfs.io/ipfs/")
@@ -44,7 +55,7 @@ function PodcastCard({ podcast }) {
     }
 
     return (
-        <div>
+        <div style={{ cursor: "pointer" }}>
             <Card onClick={() => foward(podcast)} style={{ background: "#000000" }}>
                 <CardMedia
                     component="img"

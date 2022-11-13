@@ -2,7 +2,7 @@ export default function FourthPart() {
     return (
         <div
             className="bg-no-repeat bg-center h-screen w-screen p-14 items-center"
-            style={{ backgroundImage: "url(fourthPartImage.svg)" }}
+            style={{ backgroundImage: "url(fourthPartImage.png)" }}
         >
             <div className="grid grid-flow-col auto-cols-3 items-center">
                 <div></div>
