@@ -238,15 +238,6 @@ body {
     background: #000000;
     border-radius: 22px;
 }
-.submit-btn {
-    /* Rectangle 341 */
-
-    box-sizing: border-box;
-    height: 62px;
-    color: white;
-    background: #7144ff;
-    border-radius: 12px;
-}
 
 .rightPanel {
     /* Rectangle 330 */
@@ -303,4 +294,13 @@ body {
 .fileUploader {
     display: flex !important;
     margin: 2.5em !important;
+}
+.submit-btn {
+    /* Rectangle 341 */
+
+    box-sizing: border-box !important;
+    height: 62px !important;
+    color: white !important;
+    background: #7144ff !important;
+    border-radius: 12px !important;
 }
