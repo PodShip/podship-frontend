@@ -2,8 +2,6 @@ import PodcastCard from "../components/podcastCard";
 import { Grid } from "@mui/material";
 import { GET_ACTIVE_ITEM } from "../constants/subgraphQueries";
 import { useQuery } from "@apollo/client";
-import { useState, useEffect } from "react";
-
 export default function SecondPart() {
     // const [loading, setLoading] = useState(false);
     const { loading, error, data: pods } = useQuery(GET_ACTIVE_ITEM);
