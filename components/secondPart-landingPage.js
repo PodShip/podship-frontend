@@ -1,6 +1,6 @@
 import PodcastCard from "../components/podcastCard";
 import { Grid } from "@mui/material";
-import GET_ACTIVE_ITEM from "../constants/subgraphQueries";
+import { GET_ACTIVE_ITEM } from "../constants/subgraphQueries";
 import { useQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
 

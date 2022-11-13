@@ -1,10 +1,44 @@
 import { useState, useEffect } from "react";
 import { Grid } from "@mui/material";
+import { useRouter } from "next/router";
 import Header from "../components/header";
 import Waveform from "../components/Waveform";
+import { useWeb3Contract, useMoralis } from "react-moralis";
+import Footer from "../components/footer";
+import moment from "moment";
 
 export default function SinglePodcast() {
-    useEffect(() => {}, []);
+    // let { podcast, tokenId } = useQuery();
+    const router = useRouter();
+    const { isWeb3Enabled, account } = useMoralis();
+    const [image, setimage] = useState("");
+    const [podcastName, setpodcastName] = useState("");
+    const [description, setdescription] = useState("");
+    const [creatorAddress, setcreatorAddress] = useState("");
+    const [animationUrl, setanimationUrl] = useState("");
+    const { podcast, tokenId, creator, created } = router.query;
+
+    useEffect(() => {
+        updateUI();
+    }, []);
+
+    async function updateUI() {
+        const requestUrl = podcast.replace("ipfs://", "https://ipfs.io/ipfs/");
+        if (requestUrl) {
+            const tokenUriResponse = await (await fetch(requestUrl)).json();
+            console.log({ tokenUriResponse });
+            if (tokenUriResponse) {
+                setcreatorAddress(creator === account ? "Owned by you" : creator);
+                setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
+                setdescription(tokenUriResponse.description);
+                setanimationUrl(
+                    tokenUriResponse.animation_url?.replace("ipfs://", "https://ipfs.io/ipfs/")
+                );
+                setpodcastName(tokenUriResponse.name);
+            }
+        }
+        //  setImageURI(tokenURI);
+    }
     return (
         <div>
             <div
@@ -27,7 +61,7 @@ export default function SinglePodcast() {
                     <Grid container spacing={{ xs: 2, md: 8 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item md={6} className="flex p-24">
                             <img
-                                src="https://avatars.githubusercontent.com/u/29051615?v=4"
+                                src={image}
                                 alt="podcast"
                                 className="rounded-full mr-6"
                                 style={{
@@ -35,10 +69,10 @@ export default function SinglePodcast() {
                                 }}
                             />
                             <div className="mt-10">
-                                <p className="text-3xl leading-10 font-semibold">
-                                    Woman lit in red
+                                <p className="text-3xl leading-10 font-semibold">{podcastName}</p>
+                                <p className="pt-2.5 text-lg font-light leading-6">
+                                    {creatorAddress}
                                 </p>
-                                <p className="pt-2.5 text-lg font-light leading-6">Ron Lach</p>
                                 <div className="flex ">
                                     <p className="pt-2.5 text-lg font-light leading-6 pr-14">
                                         Catalog Certified
@@ -51,7 +85,11 @@ export default function SinglePodcast() {
                         </Grid>
 
                         <Grid item md={6}>
-                            <Waveform />
+                            {animationUrl ? (
+                                <Waveform waveUrl={animationUrl} />
+                            ) : (
+                                <div>loading...</div>
+                            )}
                         </Grid>
                     </Grid>
                 </section>
@@ -61,11 +99,7 @@ export default function SinglePodcast() {
                     <Grid item md={5}>
                         <p className="pt-3.5font-semibold text-3xl leading-20">Record Details</p>
                         <p className="pt-3.5 font-light text-2xl leading-8">Note</p>
-                        <p className="pt-3.5 text-xl font-light leading-6 pr-24">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting
-                            industry. Lorem Ipsum has been the industry's standard dummy text ever
-                            since the 1500s.
-                        </p>
+                        <p className="pt-3.5 text-xl font-light leading-6 pr-24">{description}</p>
                         <div className="pt-6 grid gap-4 grid-cols-3 ">
                             <p className="pt-2.5 text-xl font-light leading-6">Date Pressed</p>
                             <p className="pt-2.5 text-xl font-light leading-6">Format</p>
@@ -73,10 +107,10 @@ export default function SinglePodcast() {
                         </div>
                         <div className="grid gap-4 grid-cols-3 grid-rows-3 ">
                             <p className="pt-2.5 text-xl font-semibold leading-6">
-                                October 24, 2022
+                                {moment(parseInt(created)).format("YYYY-MM-DD")}
                             </p>
                             <p className="pt-2.5 text-xl font-semibold leading-6">.mp4</p>
-                            <p className="pt-2.5 text-xl font-semibold leading-6">324 →</p>
+                            <p className="pt-2.5 text-xl font-semibold leading-6">{tokenId}</p>
                         </div>
                     </Grid>
 
@@ -152,7 +186,7 @@ export default function SinglePodcast() {
                 </Grid>
             </section>
 
-            <div style={{ minHeight: "40vh", padding: "6rem" }}></div>
+            <Footer />
         </div>
     );
 }

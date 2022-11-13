@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import PlayCircleOutlineIcon from "@mui/icons-material/PlayCircleOutline";
+import PauseCircleOutlineIcon from "@mui/icons-material/PauseCircleOutline";
 const formWaveSurferOptions = (ref) => ({
     container: ref,
     waveColor: "#fff",
@@ -13,12 +14,11 @@ const formWaveSurferOptions = (ref) => ({
     partialRender: true,
 });
 
-export default function Waveform() {
+export default function Waveform({ waveUrl }) {
     const waveformRef = useRef(null);
     const wavesurfer = useRef(null);
     const [playing, setPlaying] = useState(false);
-    const url =
-        "https://www.mfiles.co.uk/mp3-downloads/brahms-st-anthony-chorale-theme-two-pianos.mp3";
+    const [duration, setduration] = useState(0);
 
     useEffect(() => {
         create();
@@ -28,7 +28,11 @@ export default function Waveform() {
         const WaveSurfer = (await import("wavesurfer.js")).default;
         const options = formWaveSurferOptions(waveformRef.current);
         wavesurfer.current = WaveSurfer.create(options);
-        wavesurfer.current.load(url);
+        wavesurfer.current.load(waveUrl);
+        console.log(wavesurfer.current);
+        wavesurfer.current.on("ready", function () {
+            setduration(wavesurfer.current.getDuration());
+        });
     };
 
     const handlePlayPause = () => {
@@ -36,13 +40,25 @@ export default function Waveform() {
         wavesurfer.current.playPause();
     };
 
+    const secs2Time = (secs) => {
+        const hours = Math.floor(secs / 60 / 60)
+            .toString()
+            .padStart(2, 0);
+        return hours + ":" + new Date(secs * 1000).toISOString().substr(14, 5);
+    };
+
     return (
         <div>
-            <p>1:15</p>
+            <p>{secs2Time(duration)}</p>
             <div id="waveform" className="waveDiv" ref={waveformRef} />
-            <p className="float-right ">2:30</p>
-            <div className="controls">
-                <PlayCircleOutlineIcon onClick={handlePlayPause} />
+            <p className="float-right ">{secs2Time(duration)} </p>
+            <div className="controls" style={{ cursor: "pointer" }}>
+                {!playing ? (
+                    <PlayCircleOutlineIcon onClick={handlePlayPause} />
+                ) : (
+                    <PauseCircleOutlineIcon onClick={handlePlayPause} />
+                )}
+
                 <div onClick={handlePlayPause}>{!playing ? "Play" : "Pause"}</div>
             </div>
         </div>

@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const GET_ACTIVE_ITEM = gql`
+export const GET_ACTIVE_ITEM = gql`
     {
         podSales(first: 5) {
             id
@@ -23,8 +23,35 @@ const GET_ACTIVE_ITEM = gql`
             ownerAddress {
                 id
             }
+            created
         }
     }
 `;
 
-export default GET_ACTIVE_ITEM;
+export const GET_EXPLORE_PAGE_ITEMS = gql`
+    {
+        podSales(first: 5) {
+            id
+            podcast {
+                id
+            }
+            amount
+            isOnSale
+        }
+        podcasts(
+            first: 8
+            orderBy: created
+            orderDirection: desc
+            where: { metadataURI_not: null }
+        ) {
+            id
+            metadataURI
+            baseURI
+            isOnSale
+            ownerAddress {
+                id
+            }
+            created
+        }
+    }
+`;
