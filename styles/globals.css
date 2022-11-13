@@ -7,13 +7,6 @@ body {
     color: #ffffff;
 }
 
-.flex {
-    display: flex;
-}
-
-.m-10 {
-    margin: 2.5rem;
-}
 .landingPage-main {
     /* THE NEW PODCAST 3.0 */
 
@@ -245,6 +238,15 @@ body {
     background: #000000;
     border-radius: 22px;
 }
+.submit-btn {
+    /* Rectangle 341 */
+
+    box-sizing: border-box;
+    height: 62px;
+    color: white;
+    background: #7144ff;
+    border-radius: 12px;
+}
 
 .rightPanel {
     /* Rectangle 330 */
@@ -298,12 +300,7 @@ body {
     cursor: pointer;
 }
 
-.submit-btn {
-    /* Rectangle 341 */
-
-    box-sizing: border-box;
-    height: 62px;
-    color: white;
-    background: #7144ff;
-    border-radius: 12px;
+.fileUploader {
+    display: flex !important;
+    margin: 2.5em !important;
 }

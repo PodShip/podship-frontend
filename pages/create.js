@@ -141,8 +141,7 @@ export default function Create() {
                     </ul>
                 </div>
                 <div className="rightPanel w-8/12">
-                    <br />
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input">Podcast Name *</label>
                         <Input
                             style={{ color: "white" }}
@@ -155,7 +154,7 @@ export default function Create() {
                             }}
                         />
                     </FormControl>
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input">Description *</label>
                         <TextField
                             style={{ color: "white" }}
@@ -175,7 +174,7 @@ export default function Create() {
                             maxRows={12}
                         />
                     </FormControl>
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input">Price (in ETH) *</label>
                         <Input
                             type="number"
@@ -189,7 +188,7 @@ export default function Create() {
                             }}
                         />
                     </FormControl>
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
                             Upload podcast *
                         </label>
@@ -219,7 +218,7 @@ export default function Create() {
                             </div>
                         </FileUploader>
                     </FormControl>
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
                             Upload cover Photo *
                         </label>
@@ -245,7 +244,7 @@ export default function Create() {
                             </div>
                         </FileUploader>
                     </FormControl>
-                    <FormControl className="flex m-10" style={{ color: "white" }}>
+                    <FormControl className="fileUploader" style={{ color: "white" }}>
                         <LoadingButton className="submit-btn" onClick={onSubmit} loading={loading}>
                             Create your podcast
                         </LoadingButton>
