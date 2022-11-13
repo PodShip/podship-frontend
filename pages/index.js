@@ -1,4 +1,5 @@
 const networkMapping = require("../constants/networkMapping.json");
+import Head from "next/head";
 import Header from "../components/header";
 import FirstPart from "../components/firstPart-landingPage";
 import SecondPart from "../components/secondPart-landingPage";

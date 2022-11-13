@@ -30,7 +30,7 @@ export default function Footer() {
                             </a>
                         </li>
                         <li>
-                            <a href="https://www.twitter.com/" target={"_blank"}>
+                            <a href="https://twitter.com/PodShipNFT" target={"_blank"}>
                                 Twitter
                             </a>
                         </li>
