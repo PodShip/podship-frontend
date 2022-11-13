@@ -1,40 +1,12 @@
 import PodcastCard from "../components/podcastCard";
 import { Grid } from "@mui/material";
-
+import GET_ACTIVE_ITEM from "../constants/subgraphQueries";
+import { useQuery } from "@apollo/client";
 import { useState, useEffect } from "react";
 
 export default function SecondPart() {
-    const [loading, setLoading] = useState(false);
-    const [podcasts, setPodcast] = useState([]);
-
-    const data = [
-        {
-            podcastName: "The things we do",
-            creator: "mrbeast",
-            image: "https://pbs.twimg.com/profile_images/994592419705274369/RLplF55e_400x400.jpg",
-        },
-        {
-            podcastName: "Woman lit in red",
-            creator: "Ron Lach",
-            image: "https://avatars.githubusercontent.com/u/29051615?v=4",
-        },
-        {
-            podcastName: "The greates Podcast",
-            creator: "Jhon Smith",
-            image: "https://avatars.githubusercontent.com/u/16567195?v=4",
-        },
-        {
-            podcastName: "7Seven Minutes",
-            creator: "Logan Paul",
-            image: "https://media.vanityfair.com/photos/5a4bda912d48cc419d39410d/2:3/w_686,h_1029,c_limit/Logan-Paul-Worrisome.jpg",
-        },
-    ];
-
-    useEffect(() => {
-        setLoading(true);
-        setPodcast(data);
-        setLoading(false);
-    }, [loading]);
+    // const [loading, setLoading] = useState(false);
+    const { loading, error, data: pods } = useQuery(GET_ACTIVE_ITEM);
 
     return (
         <>
@@ -55,14 +27,18 @@ export default function SecondPart() {
                 spacing={{ xs: 2, md: 8 }}
                 columns={{ xs: 4, sm: 8, md: 12 }}
             >
-                {podcasts.length ? (
-                    podcasts.map((podcast, index) => (
-                        <Grid item md={3} key={index}>
-                            <PodcastCard podcast={podcast} />
-                        </Grid>
-                    ))
+                {pods ? (
+                    pods.podcasts.map((podcast, index) =>
+                        podcast.metadataURI ? (
+                            <Grid item md={3} key={index}>
+                                <PodcastCard podcast={podcast} />
+                            </Grid>
+                        ) : (
+                            ""
+                        )
+                    )
                 ) : (
-                    <h2>No podcasts Yet...</h2>
+                    <h2>loading...</h2>
                 )}
             </Grid>
         </>

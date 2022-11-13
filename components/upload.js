@@ -4,12 +4,6 @@ import { NFTStorage, File } from "nft.storage";
 // The 'mime' npm package helps us set the correct file type on our File objects
 import mime from "mime";
 
-// The 'fs' builtin module on Node.js provides access to the file system
-import fs from "fs";
-
-// The 'path' module provides helpers for manipulating filesystem paths
-import path from "path";
-
 require("dotenv").config();
 
 // Paste your NFT.Storage API key into the quotes:
@@ -21,20 +15,23 @@ const NFT_STORAGE_KEY = `${process.env.NFT_STORAGE}`;
  * @param {string} name a name for the NFT
  * @param {string} description a text description for the NFT
  */
-async function storeNFT(file, name, description) {
+async function storeNFT(audioFile, imagefile, name, description) {
     // load the file from disk
-    const image = file; //await fileFromPath(imagePath);
+    const animation_url = await fileFromPath(audioFile);
+    const image = await fileFromPath(imagefile);
 
     console.log(NFT_STORAGE_KEY);
 
     // create a new NFTStorage client using our API key
     const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
 
+    console.log({ audioFile, imagefile, name, description });
     // call client.store, passing in the image & metadata
     return nftstorage.store({
         image,
         name,
         description,
+        animation_url,
     });
 }
 
@@ -48,36 +45,13 @@ async function storeNFT(file, name, description) {
 async function fileFromPath(file) {
     // const content = await fs.promises.readFile(file);
     const type = mime.getType(file);
-    return new File([content], path.basename(file), { type });
+    return new File([file], file.name.replace(" ", ""), { type });
 }
 
-/**
- * The main entry point for the script that checks the command line arguments and
- * calls storeNFT.
- *
- * To simplify the example, we don't do any fancy command line parsing. Just three
- * positional arguments for imagePath, name, and description
- */
 async function upload(file, name, description) {
-    // const args = process.argv.slice(2);
-    // if (args.length !== 3) {
-    //     console.error(
-    //         `usage: ${process.argv[0]} ${process.argv[1]} <image-path> <name> <description>`
-    //     );
-    //     process.exit(1);
-    // }
-
-    // const [file, name, description] = args;
     const result = await storeNFT(file, name, description);
     console.log(result);
+    return result;
 }
-
-// // Don't forget to actually call the main function!
-// // We can't `await` things at the top level, so this adds
-// // a .catch() to grab any errors and print them to the console.
-// main().catch((err) => {
-//     console.error(err);
-//     process.exit(1);
-// });
 
 export default upload;

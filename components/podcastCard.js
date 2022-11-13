@@ -1,7 +1,20 @@
 import Router from "next/router";
 import { Typography, Card, CardMedia, CardContent } from "@mui/material";
+import { useState, useEffect } from "react";
+
+const truncateString = (fullStr, strLen) => {
+    if (fullStr.length > strLen) {
+        return fullStr.substring(0, strLen) + "...";
+    }
+};
 
 function PodcastCard({ podcast }) {
+    // const { isWeb3Enabled, account } = useMoralis();
+    const [image, setimage] = useState("");
+    const [podcastName, setpodcastName] = useState("");
+    const [creator, setcreator] = useState("");
+    const [animationUrl, setanimationUrl] = useState("");
+
     const foward = (podcast) => {
         Router.push({
             pathname: "/singlePodcast",
@@ -9,12 +22,33 @@ function PodcastCard({ podcast }) {
         });
     };
 
+    useEffect(() => {
+        updateUI();
+    }, []);
+    console.log({ podcast });
+
+    async function updateUI() {
+        const requestUrl = podcast.metadataURI?.replace("ipfs://", "https://ipfs.io/ipfs/");
+        if (requestUrl) {
+            const tokenUriResponse = await (await fetch(requestUrl)).json();
+            if (tokenUriResponse) {
+                setcreator(truncateString(podcast.ownerAddress.id, 15));
+                setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
+                setanimationUrl(
+                    tokenUriResponse.animation_url?.replace("ipfs://", "https://ipfs.io/ipfs/")
+                );
+                setpodcastName(tokenUriResponse.name);
+            }
+        }
+        //  setImageURI(tokenURI);
+    }
+
     return (
         <div>
             <Card onClick={() => foward(podcast)} style={{ background: "#000000" }}>
                 <CardMedia
                     component="img"
-                    image={podcast.image}
+                    image={image}
                     alt="Profile"
                     style={{ height: "350px", borderRadius: "22px" }}
                 />
@@ -27,7 +61,7 @@ function PodcastCard({ podcast }) {
                         }}
                         color="#ffffff"
                     >
-                        {podcast.podcastName}
+                        {podcastName}
                     </Typography>
                     <Typography
                         fontSize="15px"
@@ -37,7 +71,7 @@ function PodcastCard({ podcast }) {
                             lineHeight: "30px",
                         }}
                     >
-                        {podcast.creator}
+                        {creator}
                     </Typography>
                 </CardContent>
             </Card>

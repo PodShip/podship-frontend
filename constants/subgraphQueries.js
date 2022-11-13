@@ -2,13 +2,27 @@ import { gql } from "@apollo/client";
 
 const GET_ACTIVE_ITEM = gql`
     {
-        activeItems(first: 5, where: { buyer: "0x0000000000000000000000000000000000000000" }) {
+        podSales(first: 5) {
             id
-            buyer
-            seller
-            nftAddress
-            tokenId
-            price
+            podcast {
+                id
+            }
+            amount
+            isOnSale
+        }
+        podcasts(
+            first: 4
+            orderBy: created
+            orderDirection: desc
+            where: { metadataURI_not: null }
+        ) {
+            id
+            metadataURI
+            baseURI
+            isOnSale
+            ownerAddress {
+                id
+            }
         }
     }
 `;
