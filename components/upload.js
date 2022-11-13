@@ -4,8 +4,6 @@ import { NFTStorage, File } from "nft.storage";
 // The 'mime' npm package helps us set the correct file type on our File objects
 import mime from "mime";
 
-require("dotenv").config();
-
 // Paste your NFT.Storage API key into the quotes:
 const NFT_STORAGE_KEY = `${process.env.NFT_STORAGE}`;
 

@@ -291,12 +291,16 @@ body {
     cursor: pointer;
 }
 
+.fileUploader {
+    display: flex !important;
+    margin: 2.5em !important;
+}
 .submit-btn {
     /* Rectangle 341 */
 
-    box-sizing: border-box;
-    height: 62px;
-    color: white;
-    background: #7144ff;
-    border-radius: 12px;
+    box-sizing: border-box !important;
+    height: 62px !important;
+    color: white !important;
+    background: #7144ff !important;
+    border-radius: 12px !important;
 }
