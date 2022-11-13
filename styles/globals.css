@@ -7,6 +7,13 @@ body {
     color: #ffffff;
 }
 
+.flex {
+    display: flex;
+}
+
+.m-10 {
+    margin: 2.5rem;
+}
 .landingPage-main {
     /* THE NEW PODCAST 3.0 */
 
