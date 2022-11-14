@@ -22,19 +22,18 @@ export default function SinglePodcast() {
     const [description, setdescription] = useState("");
     const [creatorAddress, setcreatorAddress] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
-    const { podcast, tokenId, creator, created, isOnSale } = router.query;
+    const { podcast, tokenId, creator, created, isOnSale, auctionId, reservePrice } = router.query;
     const { runContractFunction: startEndAuction } = useWeb3Contract();
+    const { runContractFunction: placeAbid } = useWeb3Contract();
     const dispatch = useNotification();
-
     useEffect(() => {
         updateUI();
-    }, []);
+    }, [account]);
 
     async function updateUI() {
         const requestUrl = podcast.replace("ipfs://", "https://ipfs.io/ipfs/");
         if (requestUrl) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
-            console.log({ tokenUriResponse });
             if (tokenUriResponse) {
                 setcreatorAddress(creator === account ? "Owned by you" : creator);
                 setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
@@ -51,7 +50,7 @@ export default function SinglePodcast() {
     async function onStartAuction() {
         setloading(true);
 
-        const response = await startAuction({
+        const response = await startEndAuction({
             params: {
                 abi: contractAbi,
                 contractAddress: contractAddress,
@@ -75,10 +74,26 @@ export default function SinglePodcast() {
                 contractAddress: contractAddress,
                 functionName: "endAuction",
                 params: {
-                    _auctionId: tokenId,
+                    _auctionId: parseInt(auctionId),
                 },
             },
-            onError: () => handleError(),
+            onError: (e) => handleError(e),
+            onSuccess: () => handleSuccess(),
+        });
+    }
+
+    async function onPlaceAbid() {
+        const response = await startEndAuction({
+            params: {
+                abi: contractAbi,
+                contractAddress: contractAddress,
+                functionName: "bid",
+                params: {
+                    bid: startAuctionData.bidAmount,
+                    _auctionId: parseInt(auctionId),
+                },
+            },
+            onError: (e) => handleError(e),
             onSuccess: () => handleSuccess(),
         });
     }
@@ -93,7 +108,8 @@ export default function SinglePodcast() {
         });
     };
 
-    const handleError = async () => {
+    const handleError = async (e) => {
+        console.log(e);
         setloading(false);
         dispatch({
             type: "error",
@@ -133,7 +149,10 @@ export default function SinglePodcast() {
                             />
                             <div className="mt-10">
                                 <p className="text-3xl leading-10 font-semibold">{podcastName}</p>
-                                <p className="pt-2.5 text-lg font-light leading-6">
+                                <p
+                                    className="pt-2.5 text-lg font-light leading-6"
+                                    style={{ fontSize: "14px" }}
+                                >
                                     {creatorAddress}
                                 </p>
                                 <div className="flex ">
@@ -182,7 +201,37 @@ export default function SinglePodcast() {
                             <div className="flex">
                                 <div className="basis-1/2 pr-2">
                                     <p className="font-semibold text-2xl leading-7">Auction Info</p>
-                                    {isOnSale === false ? (
+                                    {isOnSale === "true" ? (
+                                        <div
+                                            className="border-white border-2 p-5 rounded-lg"
+                                            style={{ height: "417px", width: "389px" }}
+                                        >
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Last bid price
+                                                </p>
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    1 Matic
+                                                </p>
+                                            </div>
+                                            <br />
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Auction in progress...
+                                                </p>
+                                            </div>
+                                            <hr className="mt-5 mb-5" />
+                                            <div className="ml-10 w-auto">
+                                                <LoadingButton
+                                                    className="startAuc-btn w-10/12  hover:bg-slate-800 hover:text-white"
+                                                    onClick={onEndAuction}
+                                                    loading={loading}
+                                                >
+                                                    End Auction
+                                                </LoadingButton>
+                                            </div>
+                                        </div>
+                                    ) : (
                                         <div
                                             className="border-white border-2 p-5 rounded-lg"
                                             style={{ height: "417px", width: "389px" }}
@@ -268,41 +317,11 @@ export default function SinglePodcast() {
                                             <hr className="mt-5 mb-5" />
                                             <div className="ml-10 w-auto">
                                                 <LoadingButton
-                                                    className="startAuc-btn w-10/12"
+                                                    className="startAuc-btn w-10/12  hover:bg-slate-800 hover:text-white"
                                                     onClick={onStartAuction}
                                                     loading={loading}
                                                 >
                                                     Start Auction
-                                                </LoadingButton>
-                                            </div>
-                                        </div>
-                                    ) : (
-                                        <div
-                                            className="border-white border-2 p-5 rounded-lg"
-                                            style={{ height: "417px", width: "389px" }}
-                                        >
-                                            <div className="flex  justify-between	">
-                                                <p className="pt-3.5 text-xl font-light leading-6">
-                                                    Last bid price
-                                                </p>
-                                                <p className="pt-3.5 text-xl font-light leading-6">
-                                                    1 Matic
-                                                </p>
-                                            </div>
-                                            <br />
-                                            <div className="flex  justify-between	">
-                                                <p className="pt-3.5 text-xl font-light leading-6">
-                                                    Auction in progress...
-                                                </p>
-                                            </div>
-                                            <hr className="mt-5 mb-5" />
-                                            <div className="ml-10 w-auto">
-                                                <LoadingButton
-                                                    className="startAuc-btn w-10/12"
-                                                    onClick={onEndAuction}
-                                                    loading={loading}
-                                                >
-                                                    End Auction
                                                 </LoadingButton>
                                             </div>
                                         </div>
@@ -323,7 +342,77 @@ export default function SinglePodcast() {
                             </div>
                         </Grid>
                     ) : (
-                        <div></div>
+                        <Grid item md={7}>
+                            <div className="flex">
+                                <div className="basis-1/2 pr-2">
+                                    <p className="font-semibold text-2xl leading-7">Auction Info</p>
+                                    {isOnSale === "true" ? (
+                                        <div
+                                            className="border-white border-2 p-5 rounded-lg"
+                                            style={{ height: "417px", width: "389px" }}
+                                        >
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Reserve price
+                                                </p>
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    {reservePrice || 0} Matic
+                                                </p>
+                                            </div>
+                                            <br />
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Bid amount
+                                                </p>
+                                                <Input
+                                                    className="auctionInputs"
+                                                    inputProps={{
+                                                        min: 0,
+                                                        style: { textAlign: "center" },
+                                                    }}
+                                                    onChange={(e) => {
+                                                        setstartAuctionData({
+                                                            ...startAuctionData,
+                                                            bidAmount: e.target.value,
+                                                        });
+                                                    }}
+                                                    endAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img src="info.svg"></img>
+                                                        </InputAdornment>
+                                                    }
+                                                    placeholder="Type amount"
+                                                />
+                                            </div>
+                                            <hr className="mt-5 mb-5" />
+                                            <div className="ml-10 w-auto">
+                                                <LoadingButton
+                                                    className="startAuc-btn w-10/12 hover:bg-slate-800 hover:text-white"
+                                                    onClick={onPlaceAbid}
+                                                    loading={loading}
+                                                >
+                                                    Place Bid
+                                                </LoadingButton>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div>this is not available for sale </div>
+                                    )}
+                                </div>
+
+                                <div className="basis-1/2 pl-2 ">
+                                    <p className="font-semibold text-2xl leading-7">Bids History</p>
+                                    <div
+                                        className="border-white border-2 p-5 rounded-lg h-ful"
+                                        style={{ height: "417px", width: "389px" }}
+                                    >
+                                        <p className="mt-36 text-center text-xl font-light leading-6">
+                                            Drop some eth to kick off this auction
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </Grid>
                     )}
                 </Grid>
             </section>

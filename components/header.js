@@ -28,6 +28,13 @@ export default function Header() {
                             </div>
                         </a>
                     </Link>
+                    <Link href="/myNfts">
+                        <a className="ml-4 p-4 secondary-btn ">
+                            <div className="flex flex-row items-center">
+                                <p className="ml-4">My NFTs</p>
+                            </div>
+                        </a>
+                    </Link>
                     <ConnectButton moralisAuth={false} />
                 </div>
             </nav>

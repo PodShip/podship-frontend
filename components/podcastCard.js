@@ -9,7 +9,9 @@ const truncateString = (fullStr, strLen) => {
     }
 };
 
-function PodcastCard({ podcast }) {
+function PodcastCard({ podSale, podcastParam }) {
+    const podcast = podSale?.podcast || podcastParam;
+
     // const { isWeb3Enabled, account } = useMoralis();
     const [image, setimage] = useState("");
     const [podcastName, setpodcastName] = useState("");
@@ -18,22 +20,23 @@ function PodcastCard({ podcast }) {
     const { isWeb3Enabled, account } = useMoralis();
 
     const foward = (podcast) => {
-        console.log({ podcast });
         Router.push({
             pathname: "/singlePodcast",
             query: {
                 podcast: podcast.metadataURI,
                 tokenId: podcast.id.toString(),
-                creator: podcast.ownerAddress.id,
+                creator: podcast.ownerAddress?.id || "",
                 created: podcast.created,
-                isOnSale: podcast.isOnSale,
+                isOnSale: podSale?.isOnSale || false,
+                auctionId: podSale?.auctionId || 0,
+                reservePrice: podSale?.amount || 0,
             },
         });
     };
 
     useEffect(() => {
         updateUI();
-    }, []);
+    }, [account]);
 
     async function updateUI() {
         const requestUrl = podcast.metadataURI?.replace("ipfs://", "https://ipfs.io/ipfs/");
@@ -41,9 +44,9 @@ function PodcastCard({ podcast }) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
             if (tokenUriResponse) {
                 setcreator(
-                    podcast.ownerAddress.id === account
+                    (podcast.ownerAddress?.id || "") === account
                         ? "Owned by you"
-                        : "Owner: " + truncateString(podcast.ownerAddress.id, 15)
+                        : "Owner: " + truncateString(podcast.ownerAddress?.id || "", 15)
                 );
                 setimage(tokenUriResponse.image.replace("ipfs://", "https://ipfs.io/ipfs/"));
                 setanimationUrl(

@@ -324,10 +324,14 @@ body {
     /* Rectangle 363 */
 
     box-sizing: border-box;
-
     position: relative;
-
     border: 0.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.auctionInputs:hover {
+    /* Rectangle 363 */
+    background-color: "#ffffff";
+    color: "#ffffff";
 }
 
 .startAuc-btn {

@@ -6,6 +6,8 @@ export default function SecondPart() {
     // const [loading, setLoading] = useState(false);
     const { loading, error, data: pods } = useQuery(GET_ACTIVE_ITEM);
 
+    console.log({ pods });
+
     return (
         <>
             <div className="grid grid-flow-col auto-cols-2 items-center">
@@ -26,17 +28,13 @@ export default function SecondPart() {
                 columns={{ xs: 4, sm: 8, md: 12 }}
             >
                 {pods ? (
-                    pods.podcasts.map((podcast, index) =>
-                        podcast.metadataURI ? (
-                            <Grid item md={3} key={index}>
-                                <PodcastCard podcast={podcast} />
-                            </Grid>
-                        ) : (
-                            ""
-                        )
-                    )
+                    pods.podSales.map((podSale, index) => (
+                        <Grid item md={3} key={index}>
+                            <PodcastCard podSale={podSale} />
+                        </Grid>
+                    ))
                 ) : (
-                    <h2>loading...</h2>
+                    <h2>No podcasts Yet...</h2>
                 )}
             </Grid>
         </>

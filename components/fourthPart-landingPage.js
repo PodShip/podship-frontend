@@ -13,19 +13,19 @@ export default function FourthPart() {
             </div>
             <div className="grid grid-flow-col grid-cols-5 items-center w-screen m-24">
                 <div className="items-center">
-                    <img src="powerdByLogos/QuickNode.svg" />
+                    <img className="p-8" src="powerdByLogos/QuickNode.svg" />
                 </div>
                 <div className="items-center">
-                    <img src="powerdByLogos/polygon.svg" />
+                    <img className="p-8" src="powerdByLogos/polygon.svg" />
                 </div>
                 <div className="items-center">
-                    <img src="powerdByLogos/Chainlink.svg" />
+                    <img className="p-8" src="powerdByLogos/Chainlink.svg" />
                 </div>
                 <div className="items-center">
-                    <img src="powerdByLogos/IPFS.svg" />
+                    <img className="p-8" src="powerdByLogos/IPFS.svg" />
                 </div>
                 <div className="items-center">
-                    <img src="powerdByLogos/filecoin.svg" />
+                    <img className="p-8" src="powerdByLogos/filecoin.svg" />
                 </div>
             </div>
         </div>

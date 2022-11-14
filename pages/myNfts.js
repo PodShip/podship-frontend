@@ -2,12 +2,29 @@ import { useState, useEffect } from "react";
 import { CircularProgress, Box, Grid } from "@mui/material";
 import { useQuery } from "@apollo/client";
 import Header from "../components/header";
-import { GET_EXPLORE_PAGE_ITEMS } from "../constants/subgraphQueries";
 import PodcastCard from "../components/podcastCard";
 import Footer from "../components/footer";
-export default function Explore() {
+import { gql } from "@apollo/client";
+import { useMoralis } from "react-moralis";
+
+export default function MyNfts() {
     // const [loading, setLoading] = useState(false);
-    const { loading, error, data: pods } = useQuery(GET_EXPLORE_PAGE_ITEMS);
+    const { account } = useMoralis();
+    const myNfts = gql`
+        {
+            podcasts(first: 15, where: { ownerAddress_: { id: "${account}" },metadataURI_not:null }) {
+                id
+                metadataURI
+                baseURI
+                ownerAddress {
+                    id
+                }
+                created
+            }
+        }
+    `;
+
+    const { loading, error, data: pods } = useQuery(myNfts);
 
     return (
         <div>
@@ -26,9 +43,9 @@ export default function Explore() {
                             columns={{ xs: 4, sm: 8, md: 12 }}
                         >
                             {pods ? (
-                                pods.podSales.map((podSale, index) => (
+                                pods.podcasts.map((podcast, index) => (
                                     <Grid item md={3} key={index}>
-                                        <PodcastCard podSale={podSale} />
+                                        <PodcastCard podcastParam={podcast} />
                                     </Grid>
                                 ))
                             ) : (
