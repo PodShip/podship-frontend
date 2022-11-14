@@ -26,6 +26,7 @@ function PodcastCard({ podcast }) {
                 tokenId: podcast.id.toString(),
                 creator: podcast.ownerAddress.id,
                 created: podcast.created,
+                isOnSale: podcast.isOnSale,
             },
         });
     };

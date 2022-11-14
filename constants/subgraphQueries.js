@@ -55,3 +55,17 @@ export const GET_EXPLORE_PAGE_ITEMS = gql`
         }
     }
 `;
+
+export const GET_AUCTIONS = gql`
+    {
+        podSales(first: 5, where: { podcast_: { id: "0x6" } }) {
+            id
+            podcast {
+                id
+                created
+            }
+            amount
+            isOnSale
+        }
+    }
+`;

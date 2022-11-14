@@ -1,22 +1,30 @@
 import { useState, useEffect } from "react";
-import { Grid } from "@mui/material";
+import { Grid, InputAdornment } from "@mui/material";
 import { useRouter } from "next/router";
 import Header from "../components/header";
 import Waveform from "../components/Waveform";
 import { useWeb3Contract, useMoralis } from "react-moralis";
 import Footer from "../components/footer";
 import moment from "moment";
+import { Input } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
+import { contractAbi, contractAddress } from "../constants/constants";
+import { useNotification } from "@web3uikit/core";
 
 export default function SinglePodcast() {
     // let { podcast, tokenId } = useQuery();
     const router = useRouter();
     const { isWeb3Enabled, account } = useMoralis();
+    const [startAuctionData, setstartAuctionData] = useState({});
+    const [loading, setloading] = useState(false);
     const [image, setimage] = useState("");
     const [podcastName, setpodcastName] = useState("");
     const [description, setdescription] = useState("");
     const [creatorAddress, setcreatorAddress] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
-    const { podcast, tokenId, creator, created } = router.query;
+    const { podcast, tokenId, creator, created, isOnSale } = router.query;
+    const { runContractFunction: startEndAuction } = useWeb3Contract();
+    const dispatch = useNotification();
 
     useEffect(() => {
         updateUI();
@@ -39,6 +47,61 @@ export default function SinglePodcast() {
         }
         //  setImageURI(tokenURI);
     }
+
+    async function onStartAuction() {
+        setloading(true);
+
+        const response = await startAuction({
+            params: {
+                abi: contractAbi,
+                contractAddress: contractAddress,
+                functionName: "startAuction",
+                params: {
+                    _podcastId: tokenId,
+                    _reservePrice: startAuctionData.reservePrice,
+                    _duration: startAuctionData.duration,
+                    _royaltyPercent: startAuctionData.percent,
+                },
+            },
+            onError: () => handleError(),
+            onSuccess: () => handleSuccess(),
+        });
+    }
+
+    async function onEndAuction() {
+        const response = await startEndAuction({
+            params: {
+                abi: contractAbi,
+                contractAddress: contractAddress,
+                functionName: "endAuction",
+                params: {
+                    _auctionId: tokenId,
+                },
+            },
+            onError: () => handleError(),
+            onSuccess: () => handleSuccess(),
+        });
+    }
+
+    const handleSuccess = async () => {
+        setloading(false);
+        dispatch({
+            type: "success",
+            message: "It might take a few minutes to mint your NFT, stay tuned !",
+            title: "Successfully Added your Podcast!",
+            position: "topR",
+        });
+    };
+
+    const handleError = async () => {
+        setloading(false);
+        dispatch({
+            type: "error",
+            message: "Please fill all required fileds",
+            title: "Error !",
+            position: "topR",
+        });
+    };
     return (
         <div>
             <div
@@ -114,75 +177,154 @@ export default function SinglePodcast() {
                         </div>
                     </Grid>
 
-                    <Grid item md={7}>
-                        <div className="flex">
-                            <div className="basis-1/2 pr-2">
-                                <p className="font-semibold text-2xl leading-7">Auction Info</p>
-                                <div
-                                    className="border-white border-2 p-5 rounded-lg"
-                                    style={{ height: "417px", width: "389px" }}
-                                >
-                                    <p className="pt-2.5 text-xl font-light leading-6">
-                                        Reserve price
-                                    </p>
-                                    <p className="pt-2.5 text-xl font-semibold leading-6">1 ETH</p>
-                                    <div className="grid grid-cols-1 divide-y">
-                                        <div className="flex  justify-between	">
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                Creator share
-                                            </p>
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                5%
-                                            </p>
-                                        </div>
+                    {creator === account ? (
+                        <Grid item md={7}>
+                            <div className="flex">
+                                <div className="basis-1/2 pr-2">
+                                    <p className="font-semibold text-2xl leading-7">Auction Info</p>
+                                    {isOnSale === false ? (
+                                        <div
+                                            className="border-white border-2 p-5 rounded-lg"
+                                            style={{ height: "417px", width: "389px" }}
+                                        >
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-2.5 text-xl font-light leading-6">
+                                                    Reserve price
+                                                </p>
+                                                <Input
+                                                    className="auctionInputs"
+                                                    inputProps={{
+                                                        min: 0,
+                                                        style: { textAlign: "center" },
+                                                    }}
+                                                    onChange={(e) => {
+                                                        setstartAuctionData({
+                                                            ...startAuctionData,
+                                                            reservePrice: e.target.value,
+                                                        });
+                                                    }}
+                                                    endAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img src="info.svg"></img>
+                                                        </InputAdornment>
+                                                    }
+                                                    placeholder="Type amount"
+                                                />
+                                            </div>
 
-                                        <div className="pt-3.5 flex justify-between">
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                Creator owner
-                                            </p>
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                @ronlach
-                                            </p>
-                                        </div>
+                                            <hr className="mt-5 mb-5" />
 
-                                        <div className="pt-3.5  flex justify-between">
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                Split
-                                            </p>
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                50%
-                                            </p>
-                                        </div>
-                                        <div className="pt-3.5 flex justify-between">
-                                            <p className="pt-3.5 text-xl font-light leading-6">
-                                                Split recipent
-                                            </p>
-                                            <p className="pt-2.5 text-xl font-light leading-6">
-                                                @gjentix
-                                            </p>
-                                        </div>
-                                        <div className="pt-3.5  border-white grid grid-cols-1 divide-2 pb-4"></div>
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-2.5 text-xl font-light leading-6">
+                                                    Duration
+                                                </p>
+                                                <Input
+                                                    className="auctionInputs"
+                                                    inputProps={{
+                                                        min: 0,
+                                                        style: { textAlign: "center" },
+                                                    }}
+                                                    onChange={(e) => {
+                                                        setstartAuctionData({
+                                                            ...startAuctionData,
+                                                            duration: e.target.value,
+                                                        });
+                                                    }}
+                                                    endAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img src="info.svg"></img>
+                                                        </InputAdornment>
+                                                    }
+                                                    placeholder="Type The Days"
+                                                />
+                                            </div>
 
-                                        <button className="rounded-lg bg-white text-black h-14">
-                                            Place bid
-                                        </button>
+                                            <hr className="mt-5 mb-5" />
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-2.5 text-xl font-light leading-6">
+                                                    Royalty %
+                                                </p>
+                                                <Input
+                                                    className="auctionInputs"
+                                                    inputProps={{
+                                                        min: 0,
+                                                        style: { textAlign: "center" },
+                                                    }}
+                                                    onChange={(e) => {
+                                                        setstartAuctionData({
+                                                            ...startAuctionData,
+                                                            percent: e.target.value,
+                                                        });
+                                                    }}
+                                                    endAdornment={
+                                                        <InputAdornment position="start">
+                                                            <img src="info.svg"></img>
+                                                        </InputAdornment>
+                                                    }
+                                                    placeholder="Type percent"
+                                                />
+                                            </div>
+
+                                            <hr className="mt-5 mb-5" />
+                                            <div className="ml-10 w-auto">
+                                                <LoadingButton
+                                                    className="startAuc-btn w-10/12"
+                                                    onClick={onStartAuction}
+                                                    loading={loading}
+                                                >
+                                                    Start Auction
+                                                </LoadingButton>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div
+                                            className="border-white border-2 p-5 rounded-lg"
+                                            style={{ height: "417px", width: "389px" }}
+                                        >
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Last bid price
+                                                </p>
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    1 Matic
+                                                </p>
+                                            </div>
+                                            <br />
+                                            <div className="flex  justify-between	">
+                                                <p className="pt-3.5 text-xl font-light leading-6">
+                                                    Auction in progress...
+                                                </p>
+                                            </div>
+                                            <hr className="mt-5 mb-5" />
+                                            <div className="ml-10 w-auto">
+                                                <LoadingButton
+                                                    className="startAuc-btn w-10/12"
+                                                    onClick={onEndAuction}
+                                                    loading={loading}
+                                                >
+                                                    End Auction
+                                                </LoadingButton>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                <div className="basis-1/2 pl-2 ">
+                                    <p className="font-semibold text-2xl leading-7">Bids History</p>
+                                    <div
+                                        className="border-white border-2 p-5 rounded-lg h-ful"
+                                        style={{ height: "417px", width: "389px" }}
+                                    >
+                                        <p className="mt-36 text-center text-xl font-light leading-6">
+                                            Drop some eth to kick off this auction
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-
-                            <div className="basis-1/2 pl-2 ">
-                                <p className="font-semibold text-2xl leading-7">Bids History</p>
-                                <div
-                                    className="border-white border-2 p-5 rounded-lg h-ful"
-                                    style={{ height: "417px", width: "389px" }}
-                                >
-                                    <p className="mt-36 text-center text-xl font-light leading-6">
-                                        Drop some eth to kick off this auction
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </Grid>
+                        </Grid>
+                    ) : (
+                        <div></div>
+                    )}
                 </Grid>
             </section>
 

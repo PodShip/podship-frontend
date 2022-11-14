@@ -319,3 +319,22 @@ body {
 
     color: #ffffff;
 }
+
+.auctionInputs {
+    /* Rectangle 363 */
+
+    box-sizing: border-box;
+
+    position: relative;
+
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.startAuc-btn {
+    /* Rectangle 316 */
+
+    background: #ffffff;
+    border-radius: 12px;
+    color: #000000;
+    padding: 10px;
+}
