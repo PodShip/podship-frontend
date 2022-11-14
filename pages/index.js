@@ -46,7 +46,9 @@ export default function Home() {
             <FirstPart />
             <SecondPart />
             <ThirdPart />
+            <br />
             <FourthPart />
+            <br />
             <Footer />
         </>
     );

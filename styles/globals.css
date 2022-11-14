@@ -304,3 +304,18 @@ body {
     background: #7144ff !important;
     border-radius: 12px !important;
 }
+
+.powerdBy {
+    /* Powered By: */
+
+    position: relative;
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 105px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
