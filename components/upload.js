@@ -13,7 +13,7 @@ const NFT_STORAGE_KEY = `${process.env.NFT_STORAGE}`;
  * @param {string} name a name for the NFT
  * @param {string} description a text description for the NFT
  */
-async function storeNFT(audioFile, imagefile, name, description) {
+async function storeNFT(audioFile, imagefile, data) {
     // load the file from disk
     const animation_url = await fileFromPath(audioFile);
     const image = await fileFromPath(imagefile);
@@ -23,12 +23,12 @@ async function storeNFT(audioFile, imagefile, name, description) {
     // create a new NFTStorage client using our API key
     const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });
 
-    console.log({ audioFile, imagefile, name, description });
+    console.log({ audioFile, imagefile, data });
     // call client.store, passing in the image & metadata
     return nftstorage.store({
         image,
-        name,
-        description,
+        name: data.podcastName,
+        description: data.desc,
         animation_url,
     });
 }

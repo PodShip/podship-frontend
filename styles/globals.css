@@ -304,3 +304,41 @@ body {
     background: #7144ff !important;
     border-radius: 12px !important;
 }
+
+.powerdBy {
+    /* Powered By: */
+
+    position: relative;
+
+    font-family: "Poppins";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 70px;
+    line-height: 105px;
+    /* identical to box height */
+
+    color: #ffffff;
+}
+
+.auctionInputs {
+    /* Rectangle 363 */
+
+    box-sizing: border-box;
+    position: relative;
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+}
+
+.auctionInputs:hover {
+    /* Rectangle 363 */
+    background-color: "#ffffff";
+    color: "#ffffff";
+}
+
+.startAuc-btn {
+    /* Rectangle 316 */
+
+    background: #ffffff;
+    border-radius: 12px;
+    color: #000000;
+    padding: 10px;
+}
