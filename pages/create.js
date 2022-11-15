@@ -32,7 +32,7 @@ export default function Create() {
 
     const onSubmit = async () => {
         setloading(true);
-        if (!file || !fileCover || !data.podcastName || !data.desc || !data.price) {
+        if (!file || !fileCover || !data.podcastName || !data.desc) {
             handleError();
             setloading(false);
             return;
@@ -109,16 +109,7 @@ export default function Create() {
                                 <p className="ml-5">Description</p>
                             </div>
                         </li>
-                        <li className="mb-2">
-                            <div className="flex flex-row items-center">
-                                {data.price ? (
-                                    <img src="selected.svg"></img>
-                                ) : (
-                                    <img src="unselected.svg"></img>
-                                )}
-                                <p className="ml-5">Price</p>
-                            </div>
-                        </li>
+
                         <li className="mb-2">
                             <div className="flex flex-row items-center">
                                 {file ? (
@@ -174,20 +165,7 @@ export default function Create() {
                             maxRows={12}
                         />
                     </FormControl>
-                    <FormControl className="fileUploader" style={{ color: "white" }}>
-                        <label htmlFor="my-input">Price (in ETH) *</label>
-                        <Input
-                            type="number"
-                            style={{ color: "white" }}
-                            className="inputTxt p-3 mt-3"
-                            id="my-input"
-                            required
-                            placeholder="0.01"
-                            onChange={(val) => {
-                                setData({ ...data, price: val.target.value });
-                            }}
-                        />
-                    </FormControl>
+
                     <FormControl className="fileUploader" style={{ color: "white" }}>
                         <label htmlFor="my-input" className="mb-3">
                             Upload podcast *

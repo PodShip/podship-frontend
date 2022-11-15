@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Grid, InputAdornment } from "@mui/material";
+import { CircularProgress, Grid, InputAdornment } from "@mui/material";
 import { useRouter } from "next/router";
 import Header from "../components/header";
 import Waveform from "../components/Waveform";
@@ -10,6 +10,8 @@ import { Input } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { contractAbi, contractAddress } from "../constants/constants";
 import { useNotification } from "@web3uikit/core";
+import { gql, useQuery } from "@apollo/client";
+import { truncateString } from "../utils/utils";
 
 export default function SinglePodcast() {
     // let { podcast, tokenId } = useQuery();
@@ -26,6 +28,23 @@ export default function SinglePodcast() {
     const { runContractFunction: startEndAuction } = useWeb3Contract();
     const { runContractFunction: placeAbid } = useWeb3Contract();
     const dispatch = useNotification();
+    const bidsQuery = gql`
+        {
+            bids(first: 5, where: { auctionId: "${auctionId}" }) {
+                id
+                auctionId
+                bidder {
+                    id
+                }
+                adrr
+                bid
+            }
+        }
+    `;
+    const { loading: bidsLoading, error, data: bids } = useQuery(bidsQuery);
+
+    console.log(bids);
+
     useEffect(() => {
         updateUI();
     }, [account]);
@@ -83,7 +102,8 @@ export default function SinglePodcast() {
     }
 
     async function onPlaceAbid() {
-        const response = await startEndAuction({
+        setloading(true);
+        const response = await placeAbid({
             params: {
                 abi: contractAbi,
                 contractAddress: contractAddress,
@@ -96,6 +116,7 @@ export default function SinglePodcast() {
             onError: (e) => handleError(e),
             onSuccess: () => handleSuccess(),
         });
+        setloading(false);
     }
 
     const handleSuccess = async () => {
@@ -189,7 +210,7 @@ export default function SinglePodcast() {
                         </div>
                         <div className="grid gap-4 grid-cols-3 grid-rows-3 ">
                             <p className="pt-2.5 text-xl font-semibold leading-6">
-                                {moment(parseInt(created)).format("YYYY-MM-DD")}
+                                {moment(parseInt(created) * 1000).format("YYYY-MM-DD")}
                             </p>
                             <p className="pt-2.5 text-xl font-semibold leading-6">.mp4</p>
                             <p className="pt-2.5 text-xl font-semibold leading-6">{tokenId}</p>
@@ -406,9 +427,35 @@ export default function SinglePodcast() {
                                         className="border-white border-2 p-5 rounded-lg h-ful"
                                         style={{ height: "417px", width: "389px" }}
                                     >
-                                        <p className="mt-36 text-center text-xl font-light leading-6">
-                                            Drop some eth to kick off this auction
-                                        </p>
+                                        <div className="flex justify-between">
+                                            <h1 style={{ fontSize: "25px" }}>
+                                                <strong> Bidder</strong>
+                                            </h1>
+                                            <h1 style={{ fontSize: "25px" }}>
+                                                <strong> Amount</strong>
+                                            </h1>
+                                        </div>
+                                        <hr className="mb-5" />
+                                        {bidsLoading ? (
+                                            <div
+                                                style={{ textAlign: "center", paddingTop: "3rem" }}
+                                            >
+                                                <CircularProgress
+                                                    style={{ width: "6rem", height: "6rem" }}
+                                                />
+                                            </div>
+                                        ) : bids ? (
+                                            bids.bids.map((bid) => (
+                                                <div className="flex justify-between">
+                                                    <p>{truncateString(bid.bidder.id || "", 25)}</p>
+                                                    <p>{bid.bid}</p>
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <p className="mt-36 text-center text-xl font-light leading-6">
+                                                Drop some eth to kick off this auction
+                                            </p>
+                                        )}
                                     </div>
                                 </div>
                             </div>

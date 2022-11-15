@@ -2,12 +2,7 @@ import Router from "next/router";
 import { Typography, Card, CardMedia, CardContent } from "@mui/material";
 import { useWeb3Contract, useMoralis } from "react-moralis";
 import { useState, useEffect } from "react";
-
-const truncateString = (fullStr, strLen) => {
-    if (fullStr.length > strLen) {
-        return fullStr.substring(0, strLen) + "...";
-    }
-};
+import { truncateString } from "../utils/utils";
 
 function PodcastCard({ podSale, podcastParam }) {
     const podcast = podSale?.podcast || podcastParam;
