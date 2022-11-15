@@ -1,0 +1,130 @@
+import { Container } from "@mui/system";
+import React from "react";
+import Header from "../components/header";
+
+function supporters(props) {
+    return (
+        <div className="">
+            <Header />
+            <center className="mt-24 mx-auto mb-40">
+                <div className="w-1/2 ">
+                    <p className="text-4xl leading-10 font-semibold">Supporters</p>
+                    <p className="mb-7 text-base leading-10 font-normal">
+                        Tip your fav creator and get a chance to win a free NFT
+                    </p>
+
+                    <div
+                        className="bg-gray-900 p-10	mb-10"
+                        style={{ width: "600px", borderRadius: "22px" }}
+                    >
+                        <div className="flex mb-8">
+                            <img src="Vector.png" alt="" />
+                            <p className="ml-2 ">Recent Winners</p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+                    </div>
+
+                    <div
+                        className="bg-gray-900 p-10	mb-7"
+                        style={{ width: "600px", borderRadius: "22px" }}
+                    >
+                        <div className="flex mb-8">
+                            <p className="ml-2 ">Recent Supporters</p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+
+                        <div className="flex mb-5 justify-between">
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-5 py-3"
+                            >
+                                01
+                            </p>
+                            <p
+                                style={{ background: "#434242", borderRadius: "8px" }}
+                                className="px-10 py-3"
+                            >
+                                0x00000000000000000000000000000000005
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    );
+}
+
+export default supporters;
