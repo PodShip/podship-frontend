@@ -1,4 +1,4 @@
-# market-place-nextjs-thegraph
+# Podcast on the Web 3.0
 
 
 ### To run this project do:
