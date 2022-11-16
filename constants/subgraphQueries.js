@@ -49,3 +49,38 @@ export const GET_EXPLORE_PAGE_ITEMS = gql`
         }
     }
 `;
+
+export const GET_SUPPORTERS_WINNERS = gql`
+    {
+        supporterNFTs(
+            first: 1
+            orderBy: created
+            orderDirection: desc
+            where: { ownerAddress_: { isRecentWinner: true } }
+        ) {
+            id
+            metadataURI
+            created
+            ownerAddress {
+                id
+                isRecentWinner
+            }
+        }
+    }
+`;
+
+export const GET_SUPPORTERS = gql`
+    {
+        supporterNFTs(first: 7, orderBy: created, orderDirection: desc) {
+            id
+            metadataURI
+            created
+            ownerAddress {
+                id
+            }
+            creator {
+                id
+            }
+        }
+    }
+`;

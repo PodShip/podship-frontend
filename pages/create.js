@@ -222,7 +222,7 @@ export default function Create() {
                             </div>
                         </FileUploader>
                     </FormControl>
-                    <FormControl className="fileUploader" style={{ color: "white" }}>
+                    <FormControl className="fileUploader">
                         <LoadingButton className="submit-btn" onClick={onSubmit} loading={loading}>
                             Create your podcast
                         </LoadingButton>
