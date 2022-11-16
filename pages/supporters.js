@@ -1,8 +1,14 @@
-import { Container } from "@mui/system";
+import { useQuery } from "@apollo/client";
 import React from "react";
 import Header from "../components/header";
+import { GET_SUPPORTERS, GET_SUPPORTERS_WINNERS } from "../constants/subgraphQueries";
 
 function supporters(props) {
+    const { loading, error, data: supporters } = useQuery(GET_SUPPORTERS);
+    const { loadingWinners, error: winnerError, data: winners } = useQuery(GET_SUPPORTERS_WINNERS);
+
+    console.log({ supporters });
+    console.log({ winners, winnerError, loadingWinners });
     return (
         <div className="">
             <Header />
@@ -22,50 +28,28 @@ function supporters(props) {
                             <p className="ml-2 ">Recent Winners</p>
                         </div>
 
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
-
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
-
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
+                        {!loadingWinners && winners && winners.supporterNFTs.length > 0 ? (
+                            winners.supporterNFTs.map((x) => (
+                                <div className="flex mb-5 justify-between">
+                                    <p
+                                        style={{ background: "#434242", borderRadius: "8px" }}
+                                        className="px-5 py-3"
+                                    >
+                                        {x.id}
+                                    </p>
+                                    <p
+                                        style={{ background: "#434242", borderRadius: "8px" }}
+                                        className="px-10 py-3"
+                                    >
+                                        {x.ownerAddress.id}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div>
+                                <p>No Winners yet stay tuned !</p>
+                            </div>
+                        )}
                     </div>
 
                     <div
@@ -76,50 +60,28 @@ function supporters(props) {
                             <p className="ml-2 ">Recent Supporters</p>
                         </div>
 
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
-
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
-
-                        <div className="flex mb-5 justify-between">
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-5 py-3"
-                            >
-                                01
-                            </p>
-                            <p
-                                style={{ background: "#434242", borderRadius: "8px" }}
-                                className="px-10 py-3"
-                            >
-                                0x00000000000000000000000000000000005
-                            </p>
-                        </div>
+                        {!loading && supporters ? (
+                            supporters.supporterNFTs.map((x) => (
+                                <div className="flex mb-5 justify-between">
+                                    <p
+                                        style={{ background: "#434242", borderRadius: "8px" }}
+                                        className="px-5 py-3"
+                                    >
+                                        {x.id}
+                                    </p>
+                                    <p
+                                        style={{ background: "#434242", borderRadius: "8px" }}
+                                        className="px-10 py-3"
+                                    >
+                                        {x.ownerAddress.id}
+                                    </p>
+                                </div>
+                            ))
+                        ) : (
+                            <div>
+                                <p>No Supporters yet</p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </center>

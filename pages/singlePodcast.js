@@ -18,6 +18,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
+import { ethers } from "ethers";
 
 export default function SinglePodcast() {
     // let { podcast, tokenId } = useQuery();
@@ -82,12 +83,12 @@ export default function SinglePodcast() {
                 functionName: "startAuction",
                 params: {
                     _podcastId: tokenId,
-                    _reservePrice: startAuctionData.reservePrice,
+                    _reservePrice: ethers.utils.parseUnits(startAuctionData.reservePrice, 18),
                     _duration: startAuctionData.duration,
                     _royaltyPercent: startAuctionData.percent,
                 },
             },
-            onError: () => handleError(),
+            onError: (e) => handleError(e),
             onSuccess: () => handleSuccess(),
         });
     }
@@ -115,8 +116,8 @@ export default function SinglePodcast() {
                 abi: contractAbi,
                 contractAddress: contractAddress,
                 functionName: "bid",
+                msgValue: ethers.utils.parseUnits(startAuctionData.bidAmount, 18),
                 params: {
-                    bid: parseInt(startAuctionData.bidAmount),
                     _auctionId: parseInt(auctionId),
                 },
             },
@@ -135,8 +136,8 @@ export default function SinglePodcast() {
                 abi: contractAbi,
                 contractAddress: contractAddress,
                 functionName: "tipCreator",
+                msgValue: ethers.utils.parseUnits(startAuctionData.tipAmount, 18),
                 params: {
-                    tipCreator: startAuctionData.tipAmount,
                     _podcastID: tokenId,
                 },
             },
@@ -162,7 +163,7 @@ export default function SinglePodcast() {
         setloading(false);
         dispatch({
             type: "error",
-            message: "Please fill all required fileds",
+            message: e.data?.message || e,
             title: "Error !",
             position: "topR",
         });
@@ -241,7 +242,11 @@ export default function SinglePodcast() {
                         </a>
                     </Link>
                     <div className="flex flex-row items-center">
-                        <a className="ml-4 p-1 secondary-btn" onClick={handleClickOpen}>
+                        <a
+                            className="ml-4 p-1 secondary-btn"
+                            onClick={handleClickOpen}
+                            style={{ cursor: "pointer" }}
+                        >
                             <div className="flex flex-row items-center mt-2 ml-2">
                                 <img src="dolar.svg" />
                                 <p className="ml-2">Tip Creator</p>
@@ -469,7 +474,11 @@ export default function SinglePodcast() {
                                                     Reserve price
                                                 </p>
                                                 <p className="pt-3.5 text-xl font-light leading-6">
-                                                    {reservePrice || 0} Matic
+                                                    {ethers.utils.formatUnits(
+                                                        reservePrice,
+                                                        "ether"
+                                                    ) || 0}{" "}
+                                                    Matic
                                                 </p>
                                             </div>
                                             <br />
@@ -539,8 +548,11 @@ export default function SinglePodcast() {
                                         ) : bids ? (
                                             bids.bids.map((bid) => (
                                                 <div className="flex justify-between">
-                                                    <p>{truncateString(bid.bidder.id || "", 25)}</p>
-                                                    <p>{bid.bid}</p>
+                                                    <p>{truncateString(bid.bidder.id || "", 20)}</p>
+                                                    <p>
+                                                        {ethers.utils.formatUnits(bid.bid, "ether")}{" "}
+                                                        Matic
+                                                    </p>
                                                 </div>
                                             ))
                                         ) : (
