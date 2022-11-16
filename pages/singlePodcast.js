@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import { CircularProgress, Grid, InputAdornment } from "@mui/material";
+import { Button, CircularProgress, Grid, InputAdornment } from "@mui/material";
 import { useRouter } from "next/router";
-import Header from "../components/header";
 import Waveform from "../components/Waveform";
 import { useWeb3Contract, useMoralis } from "react-moralis";
 import Footer from "../components/footer";
@@ -12,6 +11,13 @@ import { contractAbi, contractAddress } from "../constants/constants";
 import { useNotification } from "@web3uikit/core";
 import { gql, useQuery } from "@apollo/client";
 import { truncateString } from "../utils/utils";
+import Link from "next/link";
+import TextField from "@mui/material/TextField";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 export default function SinglePodcast() {
     // let { podcast, tokenId } = useQuery();
@@ -19,13 +25,15 @@ export default function SinglePodcast() {
     const { isWeb3Enabled, account } = useMoralis();
     const [startAuctionData, setstartAuctionData] = useState({});
     const [loading, setloading] = useState(false);
+    const [open, setopen] = useState(false);
     const [image, setimage] = useState("");
     const [podcastName, setpodcastName] = useState("");
     const [description, setdescription] = useState("");
     const [creatorAddress, setcreatorAddress] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
     const { podcast, tokenId, creator, created, isOnSale, auctionId, reservePrice } = router.query;
-    const { runContractFunction: startEndAuction } = useWeb3Contract();
+    const { runContractFunction: startEndAuction, runContractFunction: tipCreator } =
+        useWeb3Contract();
     const { runContractFunction: placeAbid } = useWeb3Contract();
     const dispatch = useNotification();
     const bidsQuery = gql`
@@ -42,8 +50,6 @@ export default function SinglePodcast() {
         }
     `;
     const { loading: bidsLoading, error, data: bids } = useQuery(bidsQuery);
-
-    console.log(bids);
 
     useEffect(() => {
         updateUI();
@@ -103,13 +109,14 @@ export default function SinglePodcast() {
 
     async function onPlaceAbid() {
         setloading(true);
+        console.log({ startAuctionData });
         const response = await placeAbid({
             params: {
                 abi: contractAbi,
                 contractAddress: contractAddress,
                 functionName: "bid",
                 params: {
-                    bid: startAuctionData.bidAmount,
+                    bid: parseInt(startAuctionData.bidAmount),
                     _auctionId: parseInt(auctionId),
                 },
             },
@@ -117,6 +124,27 @@ export default function SinglePodcast() {
             onSuccess: () => handleSuccess(),
         });
         setloading(false);
+    }
+
+    async function onTipCreator() {
+        setloading(true);
+
+        console.log({ startAuctionData });
+        const response = await tipCreator({
+            params: {
+                abi: contractAbi,
+                contractAddress: contractAddress,
+                functionName: "tipCreator",
+                params: {
+                    tipCreator: startAuctionData.tipAmount,
+                    _podcastID: tokenId,
+                },
+            },
+            onError: (e) => handleError(e),
+            onSuccess: () => handleSuccess(),
+        });
+        setloading(false);
+        setopen(false);
     }
 
     const handleSuccess = async () => {
@@ -139,8 +167,55 @@ export default function SinglePodcast() {
             position: "topR",
         });
     };
+
+    const handleClickOpen = () => {
+        setopen(true);
+    };
+
+    const handleClose = () => {
+        setopen(false);
+    };
     return (
         <div>
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle style={{ color: "white" }}>Tip Creator !</DialogTitle>
+                <DialogContent>
+                    <DialogContentText style={{ color: "white" }}>
+                        Please Enter an amount you want to tip this creator with.
+                    </DialogContentText>
+                    <Input
+                        fullWidth
+                        className="auctionInputs mt-5"
+                        inputProps={{
+                            min: 0,
+                            style: { textAlign: "center" },
+                        }}
+                        onChange={(e) => {
+                            setstartAuctionData({
+                                ...startAuctionData,
+                                tipAmount: e.target.value,
+                            });
+                        }}
+                        endAdornment={
+                            <InputAdornment position="start">
+                                <img src="info.svg"></img>
+                            </InputAdornment>
+                        }
+                        placeholder="Type amount"
+                    />
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} style={{ color: "white" }}>
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={onTipCreator}
+                        style={{ backgroundColor: "white", color: "black" }}
+                    >
+                        Tip
+                    </Button>
+                </DialogActions>
+            </Dialog>
             <div
                 className="bg-center pb-24"
                 style={{
@@ -156,7 +231,24 @@ export default function SinglePodcast() {
                     zIndex: "100",
                 }}
             >
-                <Header />
+                <nav className="p-5 flex flex-row justify-between items-center ">
+                    <Link href="/">
+                        <a className="ml-4 p-1 secondary-btn ">
+                            <div className="flex flex-row items-center mt-2 ml-2">
+                                <img src="backArrow.svg" />
+                                <p className="ml-2">Go Back</p>
+                            </div>
+                        </a>
+                    </Link>
+                    <div className="flex flex-row items-center">
+                        <a className="ml-4 p-1 secondary-btn" onClick={handleClickOpen}>
+                            <div className="flex flex-row items-center mt-2 ml-2">
+                                <img src="dolar.svg" />
+                                <p className="ml-2">Tip Creator</p>
+                            </div>
+                        </a>
+                    </div>
+                </nav>
                 <section id="first" className="p-36 pt-44">
                     <Grid container spacing={{ xs: 2, md: 8 }} columns={{ xs: 4, sm: 8, md: 12 }}>
                         <Grid item md={6} className="flex p-24">
