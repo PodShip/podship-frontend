@@ -28,6 +28,13 @@ export default function Header() {
                             </div>
                         </a>
                     </Link>
+                    <Link href="/supporters">
+                        <a className="ml-4 p-4 secondary-btn ">
+                            <div className="flex flex-row items-center">
+                                <p className="ml-1">Supporters</p>
+                            </div>
+                        </a>
+                    </Link>
                     <Link href="/myNfts">
                         <a className="ml-4 p-4 secondary-btn ">
                             <div className="flex flex-row items-center">
