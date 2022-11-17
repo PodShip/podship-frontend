@@ -453,7 +453,7 @@ export default function SinglePodcast() {
                                         style={{ height: "417px", width: "389px" }}
                                     >
                                         <p className="mt-36 text-center text-xl font-light leading-6">
-                                            Drop some eth to kick off this auction
+                                            Drop some MATIC to kick off this auction
                                         </p>
                                     </div>
                                 </div>
