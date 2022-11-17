@@ -12,7 +12,7 @@ const appId = process.env.NEXT_PUBLIC_APP_ID;
 const masterKey = process.env.masterKey;
 
 async function main() {
-    console.log({ contractAddress });
+    console.log("contractAddress", contractAddress);
     await Moralis.start({ serverUrl, appId, masterKey });
     console.log("working with contract address");
 
