@@ -337,10 +337,10 @@ body {
 .startAuc-btn {
     /* Rectangle 316 */
 
-    background: #ffffff;
-    border-radius: 12px;
-    color: #000000;
-    padding: 10px;
+    background: #ffffff !important;
+    border-radius: 12px !important;
+    color: #000000 !important;
+    padding: 10px !important;
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
