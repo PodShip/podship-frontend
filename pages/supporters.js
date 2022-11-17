@@ -71,7 +71,7 @@ function supporters(props) {
                                     </p>
                                     <p
                                         style={{ background: "#434242", borderRadius: "8px" }}
-                                        className="px-10 py-3"
+                                        className="px-8 py-3"
                                     >
                                         {x.ownerAddress.id}
                                     </p>
