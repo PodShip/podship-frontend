@@ -33,10 +33,8 @@ export default function SinglePodcast() {
     const [creatorAddress, setcreatorAddress] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
     const { podcast, tokenId, creator, created, isOnSale, auctionId, reservePrice } = router.query;
-    const {
-        runContractFunction: startEndAuction,
-        runContractFunction: tipCreator,
-    } = useWeb3Contract();
+    const { runContractFunction: startEndAuction, runContractFunction: tipCreator } =
+        useWeb3Contract();
     const { runContractFunction: placeAbid } = useWeb3Contract();
     const dispatch = useNotification();
     const bidsQuery = gql`
@@ -59,7 +57,7 @@ export default function SinglePodcast() {
     }, [account]);
 
     async function updateUI() {
-        const requestUrl = podcast.replace("ipfs://", "https://ipfs.io/ipfs/");
+        const requestUrl = podcast?.replace("ipfs://", "https://ipfs.io/ipfs/");
         if (requestUrl) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
             if (tokenUriResponse) {
@@ -85,7 +83,7 @@ export default function SinglePodcast() {
                 functionName: "startAuction",
                 params: {
                     _podcastId: tokenId,
-                    _reservePrice: ethers.utils.parseUnits(startAuctionData.reservePrice, 18),
+                    _reservePrice: startAuctionData.reservePrice,
                     _duration: startAuctionData.duration,
                     _royaltyPercent: startAuctionData.percent,
                 },
