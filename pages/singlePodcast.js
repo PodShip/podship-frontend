@@ -57,7 +57,7 @@ export default function SinglePodcast() {
     }, [account]);
 
     async function updateUI() {
-        const requestUrl = podcast.replace("ipfs://", "https://ipfs.io/ipfs/");
+        const requestUrl = podcast?.replace("ipfs://", "https://ipfs.io/ipfs/");
         if (requestUrl) {
             const tokenUriResponse = await (await fetch(requestUrl)).json();
             if (tokenUriResponse) {
@@ -83,7 +83,7 @@ export default function SinglePodcast() {
                 functionName: "startAuction",
                 params: {
                     _podcastId: tokenId,
-                    _reservePrice: ethers.utils.parseUnits(startAuctionData.reservePrice, 18),
+                    _reservePrice: startAuctionData.reservePrice,
                     _duration: startAuctionData.duration,
                     _royaltyPercent: startAuctionData.percent,
                 },
@@ -189,7 +189,7 @@ export default function SinglePodcast() {
                         className="auctionInputs mt-5"
                         inputProps={{
                             min: 0,
-                            style: { textAlign: "center" },
+                            style: { textAlign: "center", color: "white" },
                         }}
                         onChange={(e) => {
                             setstartAuctionData({
@@ -362,7 +362,10 @@ export default function SinglePodcast() {
                                                     className="auctionInputs"
                                                     inputProps={{
                                                         min: 0,
-                                                        style: { textAlign: "center" },
+                                                        style: {
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                        },
                                                     }}
                                                     onChange={(e) => {
                                                         setstartAuctionData({
@@ -389,7 +392,10 @@ export default function SinglePodcast() {
                                                     className="auctionInputs"
                                                     inputProps={{
                                                         min: 0,
-                                                        style: { textAlign: "center" },
+                                                        style: {
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                        },
                                                     }}
                                                     onChange={(e) => {
                                                         setstartAuctionData({
@@ -415,7 +421,10 @@ export default function SinglePodcast() {
                                                     className="auctionInputs"
                                                     inputProps={{
                                                         min: 0,
-                                                        style: { textAlign: "center" },
+                                                        style: {
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                        },
                                                     }}
                                                     onChange={(e) => {
                                                         setstartAuctionData({
@@ -474,10 +483,8 @@ export default function SinglePodcast() {
                                                     Reserve price
                                                 </p>
                                                 <p className="pt-3.5 text-xl font-light leading-6">
-                                                    {ethers.utils.formatUnits(
-                                                        reservePrice,
-                                                        "ether"
-                                                    ) || 0}{" "}
+                                                    {ethers.utils.formatUnits(reservePrice, 18) ||
+                                                        0}
                                                     Matic
                                                 </p>
                                             </div>
@@ -490,7 +497,10 @@ export default function SinglePodcast() {
                                                     className="auctionInputs"
                                                     inputProps={{
                                                         min: 0,
-                                                        style: { textAlign: "center" },
+                                                        style: {
+                                                            textAlign: "center",
+                                                            color: "white",
+                                                        },
                                                     }}
                                                     onChange={(e) => {
                                                         setstartAuctionData({

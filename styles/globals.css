@@ -330,8 +330,8 @@ body {
 
 .auctionInputs:hover {
     /* Rectangle 363 */
-    background-color: "#ffffff";
-    color: "#ffffff";
+    background-color: "#ffffff" !important;
+    color: "#ffffff" !important;
 }
 
 .startAuc-btn {
@@ -344,6 +344,11 @@ body {
 }
 
 .css-1t1j96h-MuiPaper-root-MuiDialog-paper {
+    background: #000000 !important;
+    background-color: #000000 !important;
+}
+
+.css-uhb5lp {
     background: #000000 !important;
     background-color: #000000 !important;
 }
