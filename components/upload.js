@@ -5,7 +5,7 @@ import { NFTStorage, File } from "nft.storage";
 import mime from "mime";
 
 // Paste your NFT.Storage API key into the quotes:
-const NFT_STORAGE_KEY = `${process.env.NFT_STORAGE}`;
+const NFT_STORAGE_KEY = `${process.env.NEXT_PUBLIC_NFT_STORAGE_KEY}`;
 
 /**
  * Reads an image file from `imagePath` and stores an NFT with the given name and description.
@@ -17,8 +17,6 @@ async function storeNFT(audioFile, imagefile, data) {
     // load the file from disk
     const animation_url = await fileFromPath(audioFile);
     const image = await fileFromPath(imagefile);
-
-    console.log(NFT_STORAGE_KEY);
 
     // create a new NFTStorage client using our API key
     const nftstorage = new NFTStorage({ token: NFT_STORAGE_KEY });

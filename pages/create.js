@@ -83,7 +83,7 @@ export default function Create() {
     return (
         <>
             <Header />
-            {account && chainId === "0x13881" ? (
+            {account && chainId === "0xc45" ? (
                 <div className="flex w-screen">
                     <div className="leftPanel m-16">
                         <h1 className="primaryTxt mt-10 ml-16">Upload Form</h1>
@@ -238,7 +238,7 @@ export default function Create() {
             ) : (
                 <center>
                     <p className="text-4xl pt-40 pb-80">
-                        Please connect to your wallet to the Mumbai Network to continue.
+                        Please connect your wallet to the Hyperspace Filecoin Testnet to continue.
                     </p>
                 </center>
             )}

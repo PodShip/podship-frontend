@@ -9,6 +9,7 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
     uri: "https://api.thegraph.com/subgraphs/name/norvirae/podship",
 });
+
 function MyApp({ Component, pageProps }) {
     return (
         <>

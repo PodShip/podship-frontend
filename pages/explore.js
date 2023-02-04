@@ -8,7 +8,6 @@ import Footer from "../components/footer";
 export default function Explore() {
     // const [loading, setLoading] = useState(false);
     const { loading, error, data: pods } = useQuery(GET_EXPLORE_PAGE_ITEMS);
-
     return (
         <div>
             <Header />

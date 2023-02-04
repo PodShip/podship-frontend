@@ -33,8 +33,10 @@ export default function SinglePodcast() {
     const [creatorAddress, setcreatorAddress] = useState("");
     const [animationUrl, setanimationUrl] = useState("");
     const { podcast, tokenId, creator, created, isOnSale, auctionId, reservePrice } = router.query;
-    const { runContractFunction: startEndAuction, runContractFunction: tipCreator } =
-        useWeb3Contract();
+    const {
+        runContractFunction: startEndAuction,
+        runContractFunction: tipCreator,
+    } = useWeb3Contract();
     const { runContractFunction: placeAbid } = useWeb3Contract();
     const dispatch = useNotification();
     const bidsQuery = gql`
@@ -178,7 +180,7 @@ export default function SinglePodcast() {
     };
     return (
         <div>
-            {account && chainId === "0x13881" ? (
+            {account && chainId === "3141" ? (
                 <>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle style={{ color: "white" }}>Tip Creator !</DialogTitle>
@@ -613,7 +615,7 @@ export default function SinglePodcast() {
             ) : (
                 <center>
                     <p className="text-4xl pt-40 pb-80">
-                        Please connect to your wallet to the Mumbai Network to continue.
+                        Please connect your wallet to the Hyperspace Filecoin Testnet to continue.
                     </p>
                 </center>
             )}

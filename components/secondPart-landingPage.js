@@ -5,7 +5,6 @@ import { useQuery } from "@apollo/client";
 export default function SecondPart() {
     // const [loading, setLoading] = useState(false);
     const { loading, error, data: pods } = useQuery(GET_ACTIVE_ITEM);
-
     console.log({ pods });
 
     return (

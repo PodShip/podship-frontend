@@ -4,7 +4,8 @@ require("dotenv").config();
 const contractAddresses = require("./constants/networkMapping.json");
 
 let chainId = process.env.chainId || 31337;
-let moralisChainId = chainId == "31337" ? "1337" : chainId;
+let moralisChainId = chainId == "3141" ? "3141" : chainId;
+// let moralisChainId = chainId == "31337" ? "1337" : chainId;
 const contractAddress = contractAddresses[chainId].NftMarketPlace;
 
 const serverUrl = process.env.NEXT_PUBLIC_DAPP_URL;
@@ -12,10 +13,7 @@ const appId = process.env.NEXT_PUBLIC_APP_ID;
 const masterKey = process.env.masterKey;
 
 async function main() {
-    console.log({ contractAddress });
     await Moralis.start({ serverUrl, appId, masterKey });
-    console.log("working with contract address");
-
     const itemListedOptions = {
         chainId: moralisChainId,
         address: contractAddress,

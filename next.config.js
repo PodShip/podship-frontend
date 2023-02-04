@@ -7,6 +7,7 @@ const nextConfig = {
         NEXT_PUBLIC_DAPP_URL: process.env.NEXT_PUBLIC_DAPP_URL,
         NEXT_PUBLIC_MASTER_KEY: process.env.NEXT_PUBLIC_MASTER_KEY,
         NFT_STORAGE: process.env.NFT_STORAGE,
+        NEXT_PUBLIC_T: process.env.NEXT_PUBLIC_T,
     },
 };
 
