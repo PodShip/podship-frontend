@@ -1,5 +1,6 @@
 import { ConnectButton } from "@web3uikit/web3";
 import Link from "next/link";
+
 export default function Header() {
     return (
         <>
@@ -25,6 +26,13 @@ export default function Header() {
                             <div className="flex flex-row items-center">
                                 <img src="search.svg" />
                                 <p className="ml-2">Explore</p>
+                            </div>
+                        </a>
+                    </Link>
+                    <Link href="/notifications">
+                        <a className="ml-4 p-3 secondary-btn ">
+                            <div className="flex flex-row items-center">
+                                <p className="ml-1">Notifications</p>
                             </div>
                         </a>
                     </Link>

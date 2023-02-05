@@ -3,7 +3,9 @@ import { MoralisProvider } from "react-moralis";
 import { NotificationProvider } from "@web3uikit/core";
 import Head from "next/head";
 
+import { ethers } from "ethers";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
+import { Web3ReactProvider } from "@web3-react/core";
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
