@@ -1,6 +1,6 @@
 import Header from "../components/header";
 import Footer from "../components/footer";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FormControl, Input, TextField } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { FileUploader } from "react-drag-drop-files";
@@ -18,6 +18,7 @@ export default function Create() {
     const [data, setData] = useState({});
     const [file, setFile] = useState(null);
     const [fileCover, setFileCover] = useState(null);
+    const [userSubmittedSuccefully, setUserSubmittedSuccefully] = useState(false);
     const dispatch = useNotification();
     const { runContractFunction: mintNft } = useWeb3Contract();
     const { runContractFunction: getNftCreator } = useWeb3Contract();
@@ -34,45 +35,6 @@ export default function Create() {
         setFileCover(file);
         console.log({ file });
     };
-
-    // const myNFTS = async () => {
-    //     setloading(true);
-
-    //     if (!account) {
-    //         handleError();
-    //         setloading(false);
-    //         return;
-    //     }
-
-    //     const rrr = await getNftCreator(0xf4eA652F5B7b55f1493631Ea4aFAA63Fe0acc27C, {
-    //         params: {
-    //             abi: contractAbi,
-    //             contractAddress: contractAddress,
-    //             functionName: "getNftCreator",
-    //         },
-    //         onError: (error) => {
-    //             console.log(error);
-    //             setloading(false);
-    //         },
-    //         onSuccess: () => handleSuccess(),
-    //     });
-    //     console.log({ rrr });
-
-    //     // const response = await getNftCreator(0xf4ea652f5b7b55f1493631ea4afaa63fe0acc27c, {
-    //     //     params: {
-    //     //         abi: contractAbi,
-    //     //         contractAddress: contractAddress,
-    //     //         functionName: "getNftCreator",
-    //     //     },
-    //     //     onError: (error) => {
-    //     //         console.log(error);
-    //     //         setloading(false);
-    //     //     },
-    //     //     onSuccess: () => handleSuccess(),
-    //     // });
-
-    //     // console.log({ response });
-    // };
 
     const triggerNotification = async () => {
         // setLoading(true);
@@ -97,15 +59,8 @@ export default function Create() {
                 channel: channelAddr,
             });
             console.log("apiResponse: ", apiResponse);
-            // setApiStatus({
-            //     status: apiResponse?.status,
-            //     data: apiResponse?.config?.data,
-            // });
         } catch (e) {
             console.error("sendNotification error: \n", e);
-            // setApiStatus(JSON.stringify(e));
-        } finally {
-            // setLoading(false);
         }
     };
 
@@ -139,9 +94,35 @@ export default function Create() {
         console.log(response);
     };
 
+    async function requestSwitchNetwork(params) {
+        try {
+            await window.ethereum.request({
+                method: "wallet_switchEthereumChain",
+                params: [{ chainId: "0x5" }], // chainId must be in hexadecimal numbers
+            });
+        } catch (error) {
+            console.log({ error });
+        }
+    }
+
+    useEffect(() => {
+        console.log(chainId);
+        if (chainId === "0x5" && userSubmittedSuccefully) {
+            triggerNotification();
+            setUserSubmittedSuccefully(false);
+        } else if (chainId !== "0x5" && userSubmittedSuccefully) {
+            requestSwitchNetwork().then(() => {
+                triggerNotification();
+            });
+        }
+    }, [chainId]);
+
     const handleSuccess = async () => {
         setloading(false);
-        triggerNotification();
+        setUserSubmittedSuccefully(true);
+        alert(
+            "Please Change your network to Goerly Network before closing this message so we can send Push Notification !"
+        );
         dispatch({
             type: "success",
             message: "It might take a few minutes to mint your NFT, stay tuned !",
