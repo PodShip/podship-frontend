@@ -8,6 +8,8 @@ import upload from "../components/upload";
 import { useWeb3Contract, useMoralis } from "react-moralis";
 import { contractAbi, contractAddress } from "../constants/constants";
 import { useNotification } from "@web3uikit/core";
+import { ethers } from "ethers";
+const PushAPI = require("@pushprotocol/restapi");
 
 const fileTypes = ["mp3"];
 const fileTypesCover = ["jpg"];
@@ -21,6 +23,7 @@ export default function Create() {
     const { runContractFunction: getNftCreator } = useWeb3Contract();
     const [loading, setloading] = useState(false);
     const { account, chainId } = useMoralis();
+    const channelAddr = "0x80744e7DAaDb9E175B76f1651f564244b2F806D7";
 
     const handleChange = (file) => {
         setFile(file);
@@ -71,6 +74,41 @@ export default function Create() {
     //     // console.log({ response });
     // };
 
+    const triggerNotification = async () => {
+        // setLoading(true);
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const _signer = provider.getSigner();
+        try {
+            const apiResponse = await PushAPI.payloads.sendNotification({
+                signer: _signer,
+                env: "staging",
+                type: 1, //1 for broadcast
+                identityType: 2, //2 for direct payload
+                notification: {
+                    title: `Podship notification: ${new Date().toDateString()}`,
+                    body: `${account} created New Podcast Check it out !`,
+                },
+                payload: {
+                    title: `Podship notification: ${new Date().toDateString()}`,
+                    body: `${account} created New Podcast Check it out !`,
+                    cta: "https://main.d1xz58n1iiqqx5.amplifyapp.com/",
+                    img: "https://main.d1xz58n1iiqqx5.amplifyapp.com/logo.svg",
+                },
+                channel: channelAddr,
+            });
+            console.log("apiResponse: ", apiResponse);
+            // setApiStatus({
+            //     status: apiResponse?.status,
+            //     data: apiResponse?.config?.data,
+            // });
+        } catch (e) {
+            console.error("sendNotification error: \n", e);
+            // setApiStatus(JSON.stringify(e));
+        } finally {
+            // setLoading(false);
+        }
+    };
+
     const onSubmit = async () => {
         setloading(true);
         if (!file || !fileCover || !data.podcastName || !data.desc) {
@@ -103,6 +141,7 @@ export default function Create() {
 
     const handleSuccess = async () => {
         setloading(false);
+        triggerNotification();
         dispatch({
             type: "success",
             message: "It might take a few minutes to mint your NFT, stay tuned !",
