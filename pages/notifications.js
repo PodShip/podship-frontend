@@ -125,8 +125,29 @@ export default function Notifications() {
                                 notifications.map((not, index) => (
                                     <Grid item md={5} key={index}>
                                         <a href={not.cta}>
-                                            <strong>{not.notification.title}</strong>{" "}
-                                            <p>{not.notification.body}</p>
+                                            <div
+                                                style={{
+                                                    backgroundColor: "white",
+                                                    color: "black",
+                                                    borderRadius: "15px",
+                                                    padding: "10px",
+                                                    display: "flex",
+                                                    justifyContent: "space-between",
+                                                }}
+                                            >
+                                                <img
+                                                    src={not.icon}
+                                                    style={{ margin: "10px", borderRadius: "15px" }}
+                                                ></img>
+                                                <div style={{ margin: "10px" }}>
+                                                    <strong style={{ color: "#cf166b" }}>
+                                                        {not.notification.title}
+                                                    </strong>{" "}
+                                                    <p style={{ marginTop: "10px" }}>
+                                                        {not.notification.body}
+                                                    </p>
+                                                </div>
+                                            </div>
                                         </a>
                                     </Grid>
                                 ))
