@@ -1,5 +1,6 @@
 // PodShipAuction.sol FVM (Hyperspace Testnet)
-export const contractAddress = "0xcc4E8Ce3fAc29a6d816AF7CFE396781A91CdD3c5";
+// export const contractAddress = "0xcc4E8Ce3fAc29a6d816AF7CFE396781A91CdD3c5";
+export const contractAddress = "0x56A2EF3d9ff17c94ccb8b62909887edB46eB5140";
 
 export const contractAbi = [
     {

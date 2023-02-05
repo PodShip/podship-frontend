@@ -180,7 +180,7 @@ export default function SinglePodcast() {
     };
     return (
         <div>
-            {account && chainId === "3141" ? (
+            {account && chainId === "0xc45" ? (
                 <>
                     <Dialog open={open} onClose={handleClose}>
                         <DialogTitle style={{ color: "white" }}>Tip Creator !</DialogTitle>
@@ -353,7 +353,7 @@ export default function SinglePodcast() {
                                                             Last bid price
                                                         </p>
                                                         <p className="pt-3.5 text-xl font-light leading-6">
-                                                            1 Matic
+                                                            1 FIL
                                                         </p>
                                                     </div>
                                                     <br />
@@ -479,7 +479,7 @@ export default function SinglePodcast() {
                                                 style={{ height: "417px", width: "389px" }}
                                             >
                                                 <p className="mt-36 text-center text-xl font-light leading-6">
-                                                    Drop some MATIC to kick off this auction
+                                                    Drop some Filecoin to kick off this auction
                                                 </p>
                                             </div>
                                         </div>
@@ -506,7 +506,7 @@ export default function SinglePodcast() {
                                                                 reservePrice,
                                                                 "ether"
                                                             ) || 0}{" "}
-                                                            Matic
+                                                            FIL
                                                         </p>
                                                     </div>
                                                     <br />
@@ -595,7 +595,7 @@ export default function SinglePodcast() {
                                                                     bid.bid,
                                                                     "ether"
                                                                 )}{" "}
-                                                                Matic
+                                                                FIL
                                                             </p>
                                                         </div>
                                                     ))

@@ -25,6 +25,7 @@ export default function MyNfts() {
     `;
 
     const { loading, error, data: pods } = useQuery(myNfts);
+    console.log("🚀 ~ file: myNfts.js:28 ~ MyNfts ~ pods", pods);
 
     return (
         <div>

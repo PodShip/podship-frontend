@@ -18,6 +18,7 @@ export default function Create() {
     const [fileCover, setFileCover] = useState(null);
     const dispatch = useNotification();
     const { runContractFunction: mintNft } = useWeb3Contract();
+    const { runContractFunction: getNftCreator } = useWeb3Contract();
     const [loading, setloading] = useState(false);
     const { account, chainId } = useMoralis();
 
@@ -30,6 +31,45 @@ export default function Create() {
         setFileCover(file);
         console.log({ file });
     };
+
+    // const myNFTS = async () => {
+    //     setloading(true);
+
+    //     if (!account) {
+    //         handleError();
+    //         setloading(false);
+    //         return;
+    //     }
+
+    //     const rrr = await getNftCreator(0xf4eA652F5B7b55f1493631Ea4aFAA63Fe0acc27C, {
+    //         params: {
+    //             abi: contractAbi,
+    //             contractAddress: contractAddress,
+    //             functionName: "getNftCreator",
+    //         },
+    //         onError: (error) => {
+    //             console.log(error);
+    //             setloading(false);
+    //         },
+    //         onSuccess: () => handleSuccess(),
+    //     });
+    //     console.log({ rrr });
+
+    //     // const response = await getNftCreator(0xf4ea652f5b7b55f1493631ea4afaa63fe0acc27c, {
+    //     //     params: {
+    //     //         abi: contractAbi,
+    //     //         contractAddress: contractAddress,
+    //     //         functionName: "getNftCreator",
+    //     //     },
+    //     //     onError: (error) => {
+    //     //         console.log(error);
+    //     //         setloading(false);
+    //     //     },
+    //     //     onSuccess: () => handleSuccess(),
+    //     // });
+
+    //     // console.log({ response });
+    // };
 
     const onSubmit = async () => {
         setloading(true);
@@ -83,6 +123,11 @@ export default function Create() {
     return (
         <>
             <Header />
+
+            {/* <LoadingButton className="submit-btn" onClick={myNFTS} loading={loading}>
+                get MyNFTS
+            </LoadingButton> */}
+
             {account && chainId === "0xc45" ? (
                 <div className="flex w-screen">
                     <div className="leftPanel m-16">
